@@ -7,6 +7,13 @@
   <title>ObanimiStudio | Digital Products, Music and Technology</title>
   <link rel="canonical" href="https://obanimistudio-star.github.io/obanimistudio-website/" />
   <link rel="icon" type="image/jpeg" href="obanimistudio-logo.jpeg" />
+  <link rel="apple-touch-icon" href="app-icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#171022" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ObanimiStudio" />
   <link rel="stylesheet" href="styles.css" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="ObanimiStudio" />
@@ -152,5 +159,12 @@
     <p>© <span id="year"></span> ObanimiStudio</p>
   </footer>
   <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js");
+      });
+    }
+  </script>
 </body>
 </html>
