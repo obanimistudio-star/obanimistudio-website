@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://obanimistudio-star.github.io/obanimistudio-website/sitemap.xml
