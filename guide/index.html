@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07131c">
+  <meta name="description" content="ObanimiGuide helps UK communities find verified alerts, immigration updates, scholarships, free support and opportunities.">
+  <title>ObanimiGuide | UK Updates & Opportunities</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/app-icon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/icons/app-icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#results">Skip to information</a>
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="ObanimiStudio home">
+      <img src="../assets/brand/obanimistudio-os-logo.jpg" alt="ObanimiStudio OS logo">
+      <span><b>Obanimi</b>Guide</span>
+    </a>
+    <div class="top-actions">
+      <span class="verified"><i></i> Verified-source directory</span>
+      <button id="installButton" class="install-button" hidden>Install app</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">UK updates · support · opportunities</p>
+      <h1>Important information.<br><span>Clear and easy to find.</span></h1>
+      <p class="intro">Search trusted UK information, including immigration updates, weather and emergency alerts, scholarships, free support, jobs and resources for Nigerian and Black communities.</p>
+      <form class="search-panel" role="search" id="searchForm">
+        <label for="searchInput">What are you looking for?</label>
+        <div class="search-row">
+          <input id="searchInput" type="search" autocomplete="off" placeholder="Try ‘ILR’, ‘Nigerian passport’ or ‘free course’">
+          <button type="submit">Search</button>
+        </div>
+      </form>
+      <div class="quick-searches" aria-label="Popular searches">
+        <button data-query="ILR">ILR updates</button>
+        <button data-query="Nigerian passport">Nigerian passport</button>
+        <button data-query="free course">Free courses</button>
+        <button data-query="scholarship">Scholarships</button>
+      </div>
+    </section>
+
+    <section class="urgent-strip" aria-label="Urgent information">
+      <div><span>Urgent information</span><strong>For danger or immediate risk, use the official service and follow emergency instructions.</strong></div>
+      <a href="https://www.gov.uk/alerts" target="_blank" rel="noopener">Check UK Emergency Alerts ↗</a>
+    </section>
+
+    <section class="directory" id="results">
+      <div class="directory-head">
+        <div><p class="eyebrow">Information directory</p><h2>Trusted places to check now</h2></div>
+        <p id="resultCount" aria-live="polite"></p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter information by category">
+        <button class="active" data-category="All">All</button>
+        <button data-category="Urgent">Urgent</button>
+        <button data-category="Immigration">UKVI</button>
+        <button data-category="Nigeria">Nigerian community</button>
+        <button data-category="Opportunity">Jobs & training</button>
+        <button data-category="Education">Scholarships</button>
+        <button data-category="Support">Free support</button>
+      </div>
+      <div id="cardGrid" class="card-grid"></div>
+      <div id="emptyState" class="empty" hidden>
+        <h3>No matching information found</h3>
+        <p>Try a shorter phrase or select “All”.</p>
+        <button id="clearSearch">Clear search</button>
+      </div>
+    </section>
+
+    <section class="community-callout">
+      <div><p class="eyebrow">Community focus</p><h2>Useful information for Nigerian and Black communities in the UK.</h2></div>
+      <p>Find consular services, immigration guidance, education, employment, business support, family help and scam warnings. Every listing identifies its source so you can verify the details before acting.</p>
+    </section>
+
+    <section class="safety-note">
+      <h2>Use information safely</h2>
+      <div>
+        <p><strong>ObanimiGuide is independent.</strong> It is not part of GOV.UK, UKVI, the Met Office or the Nigeria High Commission.</p>
+        <p>Immigration information is general guidance, not legal advice. Always read the original source and use an IAA-regulated adviser or solicitor when personal advice is needed.</p>
+        <p>Never send passport details, immigration documents, passwords or payments through ObanimiGuide.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div><b>ObanimiGuide</b><span>by ObanimiStudio</span></div>
+    <p>Information that helps people move forward.</p>
+    <p>© <span id="year"></span> ObanimiStudio</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
