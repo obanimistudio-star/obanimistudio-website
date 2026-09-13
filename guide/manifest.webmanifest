@@ -1,0 +1,15 @@
+{
+  "name":"ObanimiGuide — UK Updates & Opportunities",
+  "short_name":"ObanimiGuide",
+  "description":"Verified UK alerts, immigration information, support and opportunities.",
+  "id":"/obanimistudio-website/guide/",
+  "start_url":"/obanimistudio-website/guide/",
+  "scope":"/obanimistudio-website/guide/",
+  "display":"standalone",
+  "background_color":"#07131c",
+  "theme_color":"#07131c",
+  "icons":[
+    {"src":"../assets/icons/app-icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"../assets/icons/app-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"}
+  ]
+}
