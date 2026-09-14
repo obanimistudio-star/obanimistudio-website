@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#24123f">
+  <meta name="description" content="Turn natural English, Yoruba or mixed-language thoughts into clear professional drafts.">
+  <title>ObanimiVoiceBridge | Speak naturally. Communicate clearly.</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/app-icon-64.png">
+  <link rel="apple-touch-icon" href="../assets/icons/app-icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#15132b;--purple:#3d1f66;--purple2:#6d46a3;--gold:#e8bd4c;--cream:#fbf8f1;--paper:#fff;--ink:#211c2a;--muted:#716b79;--line:#e9e2ef;--green:#167553;--greenbg:#eaf8f2;--amber:#9a6300;--amberbg:#fff5d9;--red:#a43b45;--shadow:0 18px 50px rgba(40,24,61,.12)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(180deg,#f7f1fb 0,#fbf8f1 35%,#f6f3f8 100%);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+    button,textarea,select,input{font:inherit}
+    button{cursor:pointer}
+    .top{background:radial-gradient(circle at 10% 5%,rgba(232,189,76,.28),transparent 28%),linear-gradient(135deg,var(--navy),var(--purple));color:white;padding:28px 20px 56px}
+    .bar,.hero,.shell,.footer-inner{width:min(100%,1060px);margin:auto}
+    .bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:50px;height:50px;border-radius:14px;object-fit:cover;border:2px solid var(--gold)}
+    .brand strong{font:800 19px Manrope}.brand span{display:block;color:#d9cfe7;font-size:12px;margin-top:2px}
+    .privacy-pill{border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.09);color:white;border-radius:999px;padding:9px 13px;font-weight:700;font-size:12px}
+    .hero{padding:60px 0 0;display:grid;grid-template-columns:1.25fr .75fr;gap:42px;align-items:center}
+    .eyebrow{font-weight:800;letter-spacing:.14em;color:var(--gold);font-size:12px;text-transform:uppercase}
+    h1,h2,h3{font-family:Manrope;margin-top:0}.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.02;margin:12px 0 18px;letter-spacing:-.04em}
+    .hero p{font-size:18px;line-height:1.7;color:#ddd4e8;max-width:650px}
+    .hero-card{border:1px solid rgba(255,255,255,.17);background:rgba(255,255,255,.08);backdrop-filter:blur(12px);padding:24px;border-radius:24px}
+    .hero-card div{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12)}.hero-card div:last-child{border:0}.hero-card b{color:var(--gold)}
+    .shell{margin-top:-28px;padding:0 20px 50px}
+    .workspace{background:var(--paper);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);background:#fcfbfd}
+    .step{padding:18px 20px;font:700 13px Manrope;color:var(--muted);border-right:1px solid var(--line)}.step:last-child{border:0}.step b{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:50%;background:var(--purple);color:white;margin-right:8px}
+    .panel{padding:28px}.label{display:block;font:800 13px Manrope;margin:0 0 10px}
+    .types{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:25px}
+    .type{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:15px;padding:14px;text-align:left;font-weight:700;min-height:56px}.type:hover{border-color:#bda9d3}.type.active{background:#f2ebf8;border-color:var(--purple2);color:var(--purple)}
+    .controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+    select,textarea{width:100%;border:1px solid #dcd3e4;border-radius:14px;background:white;color:var(--ink);outline:none}select{height:50px;padding:0 13px}textarea{min-height:190px;padding:16px;line-height:1.65;resize:vertical}select:focus,textarea:focus{border-color:var(--purple2);box-shadow:0 0 0 3px rgba(109,70,163,.12)}
+    .input-head,.output-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:9px}.count{font-size:12px;color:var(--muted)}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.primary,.secondary,.voice,.sample{border-radius:12px;padding:12px 16px;font-weight:800;border:0}.primary{background:linear-gradient(135deg,var(--purple2),var(--purple));color:white;box-shadow:0 8px 20px rgba(61,31,102,.2)}.secondary{background:#f3eff6;color:var(--purple)}.voice{background:var(--gold);color:#372400}.voice.listening{background:#f5dcdc;color:var(--red);animation:pulse 1.1s infinite}.sample{background:white;border:1px solid var(--line);color:var(--muted)}
+    @keyframes pulse{50%{transform:scale(1.03)}}
+    .notice{margin-top:20px;padding:15px 16px;border-radius:14px;background:var(--amberbg);color:#684700;font-size:13px;line-height:1.55;border-left:4px solid var(--gold)}
+    .output{margin-top:24px;padding:24px;border-radius:20px;background:var(--cream);border:1px solid #eadfcb;display:none}.output.show{display:block}.draft{white-space:pre-wrap;line-height:1.75;background:white;border:1px solid #eee5d7;border-radius:14px;padding:18px;min-height:120px}
+    .status{display:inline-flex;align-items:center;gap:6px;background:var(--greenbg);color:var(--green);padding:7px 10px;border-radius:999px;font-weight:800;font-size:11px}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}.feature{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.feature span{font-size:25px}.feature h3{font-size:16px;margin:10px 0 7px}.feature p{font-size:13px;color:var(--muted);line-height:1.55;margin:0}
+    footer{background:var(--navy);color:#d9d2e1;padding:30px 20px}.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px}.footer-inner strong{font-family:Manrope;color:white}.footer-inner a{color:var(--gold);text-decoration:none}
+    .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);background:var(--navy);color:white;padding:12px 18px;border-radius:12px;box-shadow:var(--shadow);transition:.25s;z-index:10}.toast.show{transform:translate(-50%,0)}
+    @media(max-width:760px){.top{padding-top:20px}.hero{grid-template-columns:1fr;padding-top:38px}.hero-card{display:none}.privacy-pill{font-size:0}.privacy-pill:after{content:"🔒 Private";font-size:12px}.steps{grid-template-columns:1fr}.step{padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}.types{grid-template-columns:1fr 1fr}.controls,.features{grid-template-columns:1fr}.panel{padding:21px 16px}.footer-inner{display:block;text-align:center}.footer-inner div+div{margin-top:12px}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="bar">
+      <div class="brand"><img class="logo" src="../assets/brand/obanimistudio-os-logo.jpg" alt="ObanimiStudio logo"><div><strong>ObanimiVoiceBridge</strong><span>by ObanimiStudio</span></div></div>
+      <button class="privacy-pill" id="privacyBtn">🔒 Privacy first</button>
+    </div>
+    <div class="hero">
+      <div><div class="eyebrow">Speak naturally · Communicate clearly</div><h1>Your words.<br>Professionally expressed.</h1><p>Turn natural English, Yorùbá or mixed-language thoughts into a clear first draft for work, school, church and everyday communication.</p></div>
+      <div class="hero-card"><div><b>01</b><span>Choose what you want to write</span></div><div><b>02</b><span>Type or speak naturally</span></div><div><b>03</b><span>Review, copy or download your draft</span></div></div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="workspace">
+      <div class="steps"><div class="step"><b>1</b> Choose document</div><div class="step"><b>2</b> Add your words</div><div class="step"><b>3</b> Review the draft</div></div>
+      <div class="panel">
+        <span class="label">What are you writing?</span>
+        <div class="types" id="types">
+          <button class="type active" data-type="work">📝 Work note</button>
+          <button class="type" data-type="school">🎒 School message</button>
+          <button class="type" data-type="email">✉️ Formal email</button>
+          <button class="type" data-type="complaint">📣 Complaint</button>
+          <button class="type" data-type="church">⛪ Church notice</button>
+          <button class="type" data-type="cv">💼 CV statement</button>
+        </div>
+
+        <div class="controls">
+          <label><span class="label">Input language</span><select id="language"><option value="en-GB">English</option><option value="yo-NG">Yorùbá</option><option value="en-GB">English + Yorùbá mix</option></select></label>
+          <label><span class="label">Writing tone</span><select id="tone"><option value="professional">Professional</option><option value="respectful">Respectful</option><option value="friendly">Friendly</option><option value="formal">Formal</option></select></label>
+        </div>
+
+        <div class="input-head"><span class="label">Type or speak in your own words</span><span class="count"><span id="charCount">0</span>/2,000</span></div>
+        <textarea id="input" maxlength="2000" placeholder="Example: Hello Emma, please I need cover tomorrow between 3 and 5 to attend my children's school appointment..."></textarea>
+        <div class="actions">
+          <button class="voice" id="voiceBtn">🎙️ Start speaking</button>
+          <button class="sample" id="sampleBtn">Try an example</button>
+          <button class="primary" id="createBtn">Create clear draft →</button>
+          <button class="secondary" id="clearBtn">Clear</button>
+        </div>
+        <div class="notice"><strong>Prototype privacy:</strong> this page does not save your text. Avoid entering full names, addresses, dates of birth, medical details, passwords or financial information. Browser voice recognition may be processed by your browser provider.</div>
+
+        <div class="output" id="output">
+          <div class="output-head"><h2>Your draft</h2><span class="status">✓ Ready to review</span></div>
+          <div class="draft" id="draft"></div>
+          <div class="actions">
+            <button class="primary" id="copyBtn">Copy draft</button>
+            <button class="secondary" id="speakBtn">🔊 Read aloud</button>
+            <button class="secondary" id="shareBtn">Share</button>
+            <button class="secondary" id="downloadBtn">Download .txt</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <article class="feature"><span>🌍</span><h3>Made for natural expression</h3><p>Start with English, Yorùbá or the way you naturally combine both.</p></article>
+      <article class="feature"><span>🛡️</span><h3>You remain in control</h3><p>Nothing is sent automatically. Always review and approve your own message.</p></article>
+      <article class="feature"><span>📱</span><h3>Works across devices</h3><p>Designed for phones, tablets and computers with no account required.</p></article>
+    </section>
+  </main>
+
+  <footer><div class="footer-inner"><div><strong>ObanimiVoiceBridge</strong><br><small>A focused prototype by ObanimiStudio</small></div><div><a href="../">Return to ObanimiStudio</a></div></div></footer>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const input=document.getElementById('input'),draft=document.getElementById('draft'),output=document.getElementById('output'),voiceBtn=document.getElementById('voiceBtn'),toast=document.getElementById('toast');
+    let selectedType='work',recognition=null,listening=false;
+    const labels={work:'Work note',school:'School message',email:'Formal email',complaint:'Complaint',church:'Church notice',cv:'CV statement'};
+    const examples={
+      work:"Paul went out for a walk with staff and said he enjoyed it. He returned home and settled in his room. No concerns noted.",
+      school:"My child will not attend school today because he is unwell. I will update you if anything changes.",
+      email:"I am asking if your organisation can support me with digital training and access to a reliable laptop.",
+      complaint:"I am writing because my delivery did not arrive on the agreed date and I have not received an update.",
+      church:"Halleluyah family, choir practice holds this Saturday at 2pm. Please arrive on time and come prepared.",
+      cv:"I build and deploy community websites, manage content, GitHub repositories and practical digital projects."
+    };
+    document.querySelectorAll('.type').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.type').forEach(x=>x.classList.remove('active'));btn.classList.add('active');selectedType=btn.dataset.type;input.placeholder='Describe your '+labels[selectedType].toLowerCase()+' in your own words...'}));
+    input.addEventListener('input',()=>document.getElementById('charCount').textContent=input.value.length);
+    function cleanText(value){
+      let s=value.trim().replace(/\s+/g,' ').replace(/\bi\b/g,'I').replace(/\bim\b/gi,"I'm").replace(/\bcant\b/gi,"can't").replace(/\bwont\b/gi,"won't").replace(/\bdont\b/gi,"don't");
+      if(!s)return '';
+      s=s.charAt(0).toUpperCase()+s.slice(1);
+      if(!/[.!?]$/.test(s))s+='.';
+      return s;
+    }
+    function makeDraft(){
+      const body=cleanText(input.value);if(!body){showToast('Please type or speak first.');input.focus();return}
+      const tone=document.getElementById('tone').value;
+      const close=tone==='formal'?'Yours faithfully,':tone==='friendly'?'Warm regards,':'Kind regards,';
+      const templates={
+        work:body,
+        school:'Dear School Team,\n\n'+body+'\n\n'+close,
+        email:'Dear Sir/Madam,\n\n'+body+'\n\n'+close,
+        complaint:'Dear Sir/Madam,\n\nI am writing regarding the following matter:\n\n'+body+'\n\nI would appreciate your assistance in resolving this matter.\n\n'+close,
+        church:'Halleluyah,\n\n'+body+'\n\nThank you and God bless.',
+        cv:body
+      };
+      draft.textContent=templates[selectedType];output.classList.add('show');output.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+    document.getElementById('createBtn').addEventListener('click',makeDraft);
+    document.getElementById('sampleBtn').addEventListener('click',()=>{input.value=examples[selectedType];input.dispatchEvent(new Event('input'));showToast('Example added. You can edit it.')});
+    document.getElementById('clearBtn').addEventListener('click',()=>{input.value='';draft.textContent='';output.classList.remove('show');input.dispatchEvent(new Event('input'))});
+    document.getElementById('copyBtn').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(draft.textContent);showToast('Draft copied.')}catch{showToast('Select the draft and copy it manually.')}});
+    document.getElementById('speakBtn').addEventListener('click',()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(draft.textContent);u.lang=document.getElementById('language').value;speechSynthesis.speak(u)});
+    document.getElementById('shareBtn').addEventListener('click',async()=>{if(navigator.share){try{await navigator.share({title:'ObanimiVoiceBridge draft',text:draft.textContent})}catch{}}else{showToast('Sharing is not supported here. Use Copy draft.')}});
+    document.getElementById('downloadBtn').addEventListener('click',()=>{const blob=new Blob([draft.textContent],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ObanimiVoiceBridge-'+selectedType+'-draft.txt';a.click();URL.revokeObjectURL(a.href)});
+    function showToast(message){toast.textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2400)}
+    document.getElementById('privacyBtn').addEventListener('click',()=>showToast('Your draft is not stored or sent by this page.'));
+    const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(SpeechRecognition){
+      recognition=new SpeechRecognition();recognition.continuous=true;recognition.interimResults=true;
+      recognition.onresult=e=>{let final='',interim='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript}if(final){input.value+=(input.value?' ':'')+final.trim();input.dispatchEvent(new Event('input'))}voiceBtn.textContent=interim?'🎙️ Listening…':'⏹ Stop speaking'};
+      recognition.onend=()=>{listening=false;voiceBtn.classList.remove('listening');voiceBtn.textContent='🎙️ Start speaking'};
+      voiceBtn.addEventListener('click',()=>{if(listening){recognition.stop()}else{recognition.lang=document.getElementById('language').value;recognition.start();listening=true;voiceBtn.classList.add('listening');voiceBtn.textContent='⏹ Stop speaking'}});
+    }else{voiceBtn.addEventListener('click',()=>showToast('Voice input is not supported by this browser. You can still type.'))}
+    if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  </script>
+</body>
+</html>
