@@ -92,7 +92,7 @@
           <button class="primary" id="createBtn">Create clear draft →</button>
           <button class="secondary" id="clearBtn">Clear</button>
         </div>
-        <div class="notice"><strong>Prototype privacy:</strong> this page does not save your text. Avoid entering full names, addresses, dates of birth, medical details, passwords or financial information. Browser voice recognition may be processed by your browser provider.</div>
+        <div class="notice"><strong>Voice note:</strong> speech is converted into text as you talk; no audio recording is created or saved.<br><strong>Prototype privacy:</strong> this page does not save your text. Avoid entering full names, addresses, dates of birth, medical details, passwords or financial information. Browser voice recognition may be processed by your browser provider.</div>
 
         <div class="output" id="output">
           <div class="output-head"><h2>Your draft</h2><span class="status">✓ Ready to review</span></div>
@@ -163,11 +163,76 @@
     document.getElementById('privacyBtn').addEventListener('click',()=>showToast('Your draft is not stored or sent by this page.'));
     const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
     if(SpeechRecognition){
-      recognition=new SpeechRecognition();recognition.continuous=true;recognition.interimResults=true;
-      recognition.onresult=e=>{let final='',interim='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript}if(final){input.value+=(input.value?' ':'')+final.trim();input.dispatchEvent(new Event('input'))}voiceBtn.textContent=interim?'🎙️ Listening…':'⏹ Stop speaking'};
-      recognition.onend=()=>{listening=false;voiceBtn.classList.remove('listening');voiceBtn.textContent='🎙️ Start speaking'};
-      voiceBtn.addEventListener('click',()=>{if(listening){recognition.stop()}else{recognition.lang=document.getElementById('language').value;recognition.start();listening=true;voiceBtn.classList.add('listening');voiceBtn.textContent='⏹ Stop speaking'}});
-    }else{voiceBtn.addEventListener('click',()=>showToast('Voice input is not supported by this browser. You can still type.'))}
+      let speechBase='',speechFinal='',speechInterim='',speechTimer;
+      recognition=new SpeechRecognition();
+      recognition.continuous=false;
+      recognition.interimResults=true;
+
+      const combinedSpeech=()=>[speechFinal.trim(),speechInterim.trim()].filter(Boolean).join(' ');
+      const showSpeech=()=>{
+        const spoken=combinedSpeech();
+        input.value=[speechBase.trim(),spoken].filter(Boolean).join(' ');
+        input.dispatchEvent(new Event('input'));
+      };
+      const resetVoice=()=>{
+        clearTimeout(speechTimer);
+        listening=false;
+        voiceBtn.classList.remove('listening');
+        voiceBtn.textContent='🎙️ Start speaking';
+      };
+      const stopVoice=(message)=>{
+        if(!listening)return;
+        showSpeech();
+        resetVoice();
+        try{recognition.abort()}catch{}
+        if(message)showToast(message);
+      };
+
+      recognition.onstart=()=>{
+        listening=true;
+        voiceBtn.classList.add('listening');
+        voiceBtn.textContent='⏹ Stop speaking';
+        clearTimeout(speechTimer);
+        speechTimer=setTimeout(()=>stopVoice('Voice input stopped automatically. Your words were kept.'),25000);
+      };
+      recognition.onresult=e=>{
+        let interim='';
+        for(let i=e.resultIndex;i<e.results.length;i++){
+          const words=e.results[i][0].transcript.trim();
+          if(e.results[i].isFinal){
+            if(words)speechFinal=[speechFinal.trim(),words].filter(Boolean).join(' ');
+          }else interim=words;
+        }
+        speechInterim=interim;
+        showSpeech();
+        voiceBtn.textContent=speechInterim?'🎙️ Listening…':'⏹ Stop speaking';
+      };
+      recognition.onspeechend=()=>{try{recognition.stop()}catch{}};
+      recognition.onnomatch=()=>showToast('I could not hear clear words. Please try again.');
+      recognition.onerror=e=>{
+        const message=e.error==='not-allowed'?'Please allow microphone access, then try again.':'Voice input stopped. Your words were kept.';
+        showSpeech();
+        resetVoice();
+        showToast(message);
+      };
+      recognition.onend=()=>{
+        showSpeech();
+        const hadSpeech=Boolean(combinedSpeech());
+        resetVoice();
+        if(hadSpeech)showToast('Speech added as text.');
+      };
+      voiceBtn.addEventListener('click',()=>{
+        if(listening){
+          stopVoice('Stopped. Your words were kept.');
+          return;
+        }
+        speechBase=input.value;
+        speechFinal='';
+        speechInterim='';
+        recognition.lang=document.getElementById('language').value;
+        try{recognition.start()}catch{resetVoice();showToast('Please wait a moment, then try again.')}
+      });
+    }else{voiceBtn.addEventListener('click',()=>showToast('Voice input is not supported here. Open this page in Safari or Chrome, or type instead.'))}
     if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
   </script>
 </body>
