@@ -1,0 +1,17 @@
+{
+  "name": "ObanimiSound Studio",
+  "short_name": "ObanimiSound",
+  "description": "Private vocal recording with gentle studio-style cleanup.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fbf7ef",
+  "theme_color": "#10182f",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
