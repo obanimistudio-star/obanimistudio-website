@@ -120,3 +120,80 @@ body{
   .nav.open{display:flex}
 }
 @media(max-width:860px){.help-grid{grid-template-columns:1fr}.help-card{min-height:0}}
+
+
+/* Professional section colour separation */
+#services{
+  background:linear-gradient(145deg,#f7f2e8 0%,#eee5d7 100%);
+  color:#17191b;
+  border:1px solid rgba(201,154,50,.22);
+  border-radius:30px;
+  margin-top:54px;
+  margin-bottom:54px;
+  box-shadow:0 28px 75px rgba(0,0,0,.22);
+}
+#services .eyebrow{color:#8a6517}
+#services .service-card{
+  background:rgba(255,255,255,.66);
+  border-color:rgba(76,59,27,.14);
+  box-shadow:0 14px 34px rgba(63,46,17,.08);
+}
+#services .service-card.featured{
+  background:linear-gradient(150deg,rgba(255,255,255,.86),rgba(239,210,122,.20));
+  border-color:rgba(154,94,45,.24);
+}
+#services .service-card:hover{
+  border-color:rgba(138,101,23,.45);
+  box-shadow:0 20px 44px rgba(63,46,17,.13);
+}
+#services .service-card p{color:#625a4d}
+#services .service-card h3{color:#17191b}
+#services .service-icon,#services .card-link{color:#8a6517}
+#services .card-number{color:#8c806c}
+
+.digital-help-section{
+  background:linear-gradient(145deg,#dfeeea 0%,#cfe3de 100%);
+  color:#142322;
+  border:1px solid rgba(21,92,92,.22);
+  border-radius:30px;
+  margin-top:54px;
+  margin-bottom:54px;
+  box-shadow:0 28px 75px rgba(0,0,0,.20);
+}
+.digital-help-section .eyebrow{color:#155c5c}
+.digital-help-section .help-card{
+  background:rgba(255,255,255,.68);
+  border-color:rgba(21,92,92,.17);
+  box-shadow:0 14px 34px rgba(13,57,57,.08);
+}
+.digital-help-section .help-card-featured{
+  background:linear-gradient(150deg,rgba(255,255,255,.88),rgba(239,210,122,.18));
+  border-color:rgba(154,94,45,.24);
+}
+.digital-help-section .help-card h3,
+.digital-help-section .help-price strong,
+.digital-help-section .help-note strong{color:#142322}
+.digital-help-section .help-card>p:not(.help-price),
+.digital-help-section .help-card ul,
+.digital-help-section .help-note{color:#405b58}
+.digital-help-section .help-price{color:#155c5c}
+.digital-help-section .help-note{
+  background:rgba(255,255,255,.42);
+  border-left-color:#8a6517;
+}
+
+@media(max-width:860px){
+  #services,.digital-help-section{
+    margin:34px 16px;
+    border-radius:24px;
+  }
+}
+@media(max-width:520px){
+  #services,.digital-help-section{
+    margin-left:12px;
+    margin-right:12px;
+    padding-top:68px;
+    padding-bottom:68px;
+    border-radius:22px;
+  }
+}
