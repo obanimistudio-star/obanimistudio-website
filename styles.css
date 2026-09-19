@@ -31,8 +31,9 @@ body{
   box-shadow:0 0 22px rgba(239,210,122,.16),0 0 0 5px rgba(239,210,122,.025);
 }
 .hero h1 span{
-  -webkit-text-stroke:1.35px rgba(245,207,98,.92);
-  text-shadow:0 0 34px rgba(239,210,122,.14);
+  color:#efd27a;
+  -webkit-text-stroke:0;
+  text-shadow:0 0 34px rgba(239,210,122,.16);
 }
 .hero-logo{
   box-shadow:0 28px 90px rgba(0,0,0,.62),0 0 78px rgba(239,210,122,.22);
@@ -196,4 +197,42 @@ body{
     padding-bottom:68px;
     border-radius:22px;
   }
+}
+
+/* Latest ObanimiSound release */
+.release-section{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:58px;
+  align-items:center;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:radial-gradient(circle at 78% 20%,rgba(239,210,122,.10),transparent 34%);
+}
+.release-media{
+  position:relative;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:22px;
+  border:1px solid rgba(239,210,122,.28);
+  box-shadow:0 30px 80px rgba(0,0,0,.42),0 0 50px rgba(201,154,50,.08);
+}
+.release-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.release-copy h2{font-size:clamp(42px,5vw,68px);line-height:1;letter-spacing:-.045em;margin:0 0 12px}
+.release-copy>p:not(.eyebrow):not(.release-subtitle){color:var(--muted);font-size:17px;max-width:520px}
+.release-subtitle{color:var(--gold2);font-weight:750;letter-spacing:.03em;margin:0 0 26px}
+.release-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.contact-actions{display:flex;align-items:center;gap:28px;flex-wrap:wrap;position:relative;z-index:1}
+.contact-secondary{color:#f4e7c7;font-size:14px;font-weight:700;border-bottom:1px solid rgba(255,255,255,.28)}
+.footer-links{display:flex;gap:24px;font-weight:700}
+.footer-links a:hover{color:var(--gold2)}
+@media(max-width:860px){
+  .release-section{grid-template-columns:1fr;gap:38px}
+  .release-copy{max-width:680px}
+}
+@media(max-width:520px){
+  .release-media{border-radius:16px}
+  .release-copy h2{font-size:42px}
+  .release-actions .button{width:100%}
+  .contact-actions{align-items:flex-start;flex-direction:column;gap:20px}
 }
