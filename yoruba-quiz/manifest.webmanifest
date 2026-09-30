@@ -1,0 +1,16 @@
+{
+  "name": "Ṣé o mọ èdè Yorùbá?",
+  "short_name": "Yorùbá Quiz",
+  "description": "A colourful Yoruba language, culture and knowledge challenge by ObanimiStudio.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fffaf0",
+  "theme_color": "#075d43",
+  "orientation": "any",
+  "categories": ["education", "games"],
+  "icons": [
+    {"src": "../app-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "../app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
