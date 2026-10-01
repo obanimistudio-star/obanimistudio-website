@@ -30,7 +30,7 @@
       <div class="hero">
         <div class="hero-copy">
           <p class="eyebrow">ỌGBỌ́N <span>•</span> Ẹ̀KỌ́ <span>•</span> ÀṢÀ</p>
-          <h1 id="homeTitle">Ṣé o mọ<br><span>èdè Yorùbá?</span></h1>
+          <h1 id="homeTitle"><span class="title-line title-one">Ṣé o mọ</span><span class="title-line title-two">èdè Yorùbá?</span></h1>
           <p class="hero-subtitle">Dán ọgbọ́n rẹ wò nínú èdè Yorùbá, ìtàn Nàìjíríà, ilé-ẹ̀kọ́, lítíréṣọ̀, ìṣirò àti iṣẹ́ àgbẹ̀.</p>
           <div class="hero-actions">
             <button class="primary-button" id="quickPlayButton" type="button">BẸ̀RẸ̀ ÌDÁNWÒ <span>→</span></button>
@@ -70,7 +70,8 @@
         <div class="quiz-main">
           <div class="question-card"><div class="question-header"><span class="difficulty-pill" id="difficultyLabel">Àwọn Ọmọdé</span><div class="timer"><span id="timerValue">20</span>s</div></div><p class="question-kicker">YAN ÌDÁHÙN TÓ PÉ</p><h2 id="questionText"></h2><p class="yoruba-hint" id="yorubaHint"></p></div>
           <div class="answers" id="answers" role="group" aria-label="Answer choices"></div>
-          <div class="lifelines"><button type="button" id="fiftyButton"><strong>50:50</strong><span>Yọ méjì</span></button><button type="button" id="timeButton"><strong>+10</strong><span>Fi àkókò kún</span></button><button type="button" id="skipButton"><strong>↪</strong><span>Fò ó</span></button><button type="button" id="musicButton"><strong>♫</strong><span>Orin</span></button></div>
+          <div class="lifelines"><button type="button" id="fiftyButton"><strong>50:50</strong><span>Yọ méjì</span></button><button type="button" id="audienceButton"><strong>👥</strong><span>Béèrè lọ́wọ́ àwọn ènìyàn</span></button><button type="button" id="timeButton"><strong>+10</strong><span>Fi àkókò kún</span></button><button type="button" id="skipButton"><strong>↪</strong><span>Yí ìbéèrè padà</span></button></div>
+          <div class="audience-poll" id="audiencePoll" hidden aria-live="polite"></div>
           <aside class="feedback-panel" id="feedbackPanel" aria-live="polite" hidden><div><span class="feedback-icon" id="feedbackIcon">✓</span><div><strong id="feedbackTitle">Ó pé!</strong><p id="feedbackText"></p></div></div><button class="primary-button" id="nextButton" type="button">Ìbéèrè tó kàn →</button></aside>
         </div>
       </div>
@@ -82,7 +83,7 @@
   </main>
 
   <canvas id="certificateCanvas" width="1600" height="1130" hidden></canvas>
-  <footer class="app-footer"><span>OS · OBANIMISTUDIO</span><span>7 Ẹ̀KA Ẹ̀KỌ́ · 4 ÌRÀNLỌ́WỌ́ · 2 ÈDÈ</span><span class="online-status" id="onlineStatus">● Online</span></footer>
+  <footer class="app-footer"><span>OS · OBANIMISTUDIO</span><span id="bankSummary">12 Ẹ̀KA Ẹ̀KỌ́ · 4 ÌRÀNLỌ́WỌ́ · 2 ÈDÈ · ÌBÉÈRÈ PÚPỌ̀</span><span class="online-status" id="onlineStatus">● Online</span></footer>
   <script src="questions.js"></script><script src="app.js"></script>
 </body>
 </html>
