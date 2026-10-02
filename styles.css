@@ -236,3 +236,6 @@ body{
   .release-actions .button{width:100%}
   .contact-actions{align-items:flex-start;flex-direction:column;gap:20px}
 }
+
+/* Yoruba quiz showcase */
+.yoruba-visual{background:linear-gradient(145deg,#07192e,#16334b);color:#fff}.yoruba-visual .project-screen{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:28px}.breathing-question{width:160px;height:160px;object-fit:contain;border-radius:32px;animation:question-breathe 4s ease-in-out infinite;box-shadow:0 0 38px #40dbe530}.yoruba-visual .project-screen strong{font-size:clamp(1.8rem,3vw,2.7rem)}.quiz-project-actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}.quiz-test-note{font-size:.92rem;line-height:1.7}.quiz-project-actions .button{white-space:normal;text-align:center}@keyframes question-breathe{50%{transform:scale(1.07);box-shadow:0 0 60px #45dce550}}@media(max-width:520px){.quiz-project-actions .button{width:100%}.breathing-question{width:140px;height:140px}}@media(prefers-reduced-motion:reduce){.breathing-question{animation:none}}
