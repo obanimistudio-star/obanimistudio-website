@@ -1,0 +1,16 @@
+{
+  "name": "Destination of Peace Parish",
+  "short_name": "Destination Peace",
+  "description": "The official website and parish platform for Celestial Church of Christ, Destination of Peace Parish.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fffdf8",
+  "theme_color": "#172c27",
+  "icons": [{
+    "src": "favicon.svg",
+    "sizes": "any",
+    "type": "image/svg+xml",
+    "purpose": "any maskable"
+  }]
+}
