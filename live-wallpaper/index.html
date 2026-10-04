@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090909"><title>ObanimiStudio — Live Wallpaper Preview</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#090909;color:#f3efe5;font-family:system-ui,sans-serif}body{display:grid;place-items:center;overflow:hidden}
+.stage{position:relative;width:min(86vmin,850px);aspect-ratio:1;display:grid;place-items:center;background:radial-gradient(circle,rgba(215,165,42,.09),transparent 69%)}
+.logo{width:68%;border-radius:50%;position:relative;z-index:2;box-shadow:0 0 70px rgba(215,165,42,.16)}
+.ring{position:absolute;border:1px solid rgba(239,210,122,.38);border-radius:50%}.outer{inset:3%;animation:orbit 42s linear infinite}.inner{inset:12.3%;animation:orbit 31s linear infinite reverse}
+.dot{position:absolute;top:50%;left:100%;width:10px;height:10px;border-radius:50%;background:#f0c95d;transform:translate(-50%,-50%);box-shadow:0 0 14px 4px rgba(240,201,93,.35)}
+@keyframes orbit{from{transform:rotate(-40deg)}to{transform:rotate(320deg)}}
+.controls{position:fixed;bottom:max(20px,env(safe-area-inset-bottom));display:flex;gap:10px;z-index:5}
+button{background:#17140d;color:#f0c95d;border:1px solid #62502d;border-radius:20px;padding:9px 16px;cursor:pointer;font:inherit;font-size:13px}
+body.clean .controls{display:none}
+</style></head><body>
+<main class="stage" aria-label="ObanimiStudio logo with two revolving gold dots">
+<div class="ring outer"><span class="dot"></span></div><div class="ring inner"><span class="dot"></span></div>
+<img class="logo" src="../assets/brand/obanimistudio-os-logo.jpg" alt="ObanimiStudio">
+</main><div class="controls"><button id="full">Full screen</button><button id="pause">Pause</button><button id="hide">Hide controls</button></div>
+<script>
+const rings=document.querySelectorAll('.ring');
+document.getElementById('full').onclick=()=>{if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});};
+document.getElementById('pause').onclick=e=>{const paused=e.target.textContent==='Pause';rings.forEach(r=>r.style.animationPlayState=paused?'paused':'running');e.target.textContent=paused?'Play':'Pause';};
+document.getElementById('hide').onclick=()=>document.body.classList.add('clean');
+document.body.ondblclick=()=>document.body.classList.remove('clean');
+</script></body></html>
