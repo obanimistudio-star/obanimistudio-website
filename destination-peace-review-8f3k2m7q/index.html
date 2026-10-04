@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="theme-color" content="#101a35" />
+  <title>Developer Review | Destination of Peace</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:linear-gradient(145deg,#081226,#172b51);font-family:Inter,Arial,sans-serif;color:#fff}
+    #gate{min-height:100vh;display:grid;place-items:center;padding:24px}
+    .card{width:min(560px,100%);padding:44px 28px;text-align:center;border:1px solid rgba(255,255,255,.17);border-radius:28px;background:rgba(255,255,255,.09);box-shadow:0 24px 70px rgba(0,0,0,.35)}
+    .lock{font-size:50px}
+    h1{margin:14px 0 10px;font-size:clamp(28px,6vw,44px)}
+    p{color:#d8e3f8;font-size:17px;line-height:1.55}
+    form{display:grid;gap:12px;margin-top:24px}
+    input{width:100%;padding:16px 18px;border:1px solid rgba(255,255,255,.24);border-radius:14px;background:#fff;color:#101a35;font-size:17px}
+    button{padding:16px 18px;border:0;border-radius:14px;background:#f4c84b;color:#101a35;font-size:17px;font-weight:800;cursor:pointer}
+    #error{min-height:24px;margin:4px 0 0;color:#ffb4b4;font-size:15px}
+    .brand{margin-top:22px;color:#f4c84b;font-weight:800;letter-spacing:.08em}
+    #root{min-height:100vh}
+  </style>
+</head>
+<body>
+  <div id="gate">
+    <main class="card">
+      <div class="lock" aria-hidden="true">🔐</div>
+      <h1>Developer review</h1>
+      <p>Enter the private review password to inspect the Destination of Peace Parish website.</p>
+      <form id="login">
+        <input id="password" type="password" autocomplete="current-password" placeholder="Review password" aria-label="Review password" required />
+        <button type="submit">Open website</button>
+        <p id="error" role="alert"></p>
+      </form>
+      <div class="brand">OBANIMISTUDIO</div>
+    </main>
+  </div>
+  <div id="root" hidden></div>
+  <script>
+    const EXPECTED_HASH = '57e3473fdb3d6cea6e7d06a1785813b48d168f6449e23997c3768b3de6210131';
+    const bytesToHex = bytes => Array.from(new Uint8Array(bytes)).map(b => b.toString(16).padStart(2,'0')).join('');
+    async function unlock(value) {
+      const hash = bytesToHex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)));
+      if (hash !== EXPECTED_HASH) return false;
+      sessionStorage.setItem('dop-review-unlocked','yes');
+      document.getElementById('gate').remove();
+      const root = document.getElementById('root');
+      root.hidden = false;
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = '../destination-of-peace/assets/index-CvPpojqM.css';
+      document.head.appendChild(css);
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = '../destination-of-peace/assets/index-CsPMkgQQ.js';
+      document.body.appendChild(script);
+      return true;
+    }
+    document.getElementById('login').addEventListener('submit', async event => {
+      event.preventDefault();
+      const ok = await unlock(document.getElementById('password').value);
+      if (!ok) document.getElementById('error').textContent = 'Incorrect password. Please try again.';
+    });
+    if (sessionStorage.getItem('dop-review-unlocked') === 'yes') {
+      unlock('PeaceReview-7426');
+    }
+  </script>
+</body>
+</html>
