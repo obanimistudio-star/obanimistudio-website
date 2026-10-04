@@ -40,16 +40,18 @@
   <script>
     const EXPECTED_HASH = '57e3473fdb3d6cea6e7d06a1785813b48d168f6449e23997c3768b3de6210131';
     const bytesToHex = bytes => Array.from(new Uint8Array(bytes)).map(b => b.toString(16).padStart(2,'0')).join('');
-    function applyConfirmedTimes(scope = document.body) {
+    function applyReviewUpdates(scope = document.body) {
       const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
       while (walker.nextNode()) {
-        if (/time to be confirmed/i.test(walker.currentNode.nodeValue || '')) {
-          walker.currentNode.nodeValue = walker.currentNode.nodeValue.replace(/time to be confirmed/gi, '10:00 pm');
-        }
+        const value = walker.currentNode.nodeValue || '';
+        walker.currentNode.nodeValue = value
+          .replace(/time to be confirmed/gi, '10:00 pm')
+          .replace(/“Peace I leave with you; my peace I give you\.”/g, '“His Presence, Our Peace”')
+          .replace(/John 14:27/g, '“Now the God of peace be with you all. Amen.” — Romans 15:33');
       }
     }
-    const timeObserver = new MutationObserver(() => applyConfirmedTimes());
-    timeObserver.observe(document.documentElement, {childList:true, subtree:true});
+    const reviewObserver = new MutationObserver(() => applyReviewUpdates());
+    reviewObserver.observe(document.documentElement, {childList:true, subtree:true});
     async function unlock(value) {
       const hash = bytesToHex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)));
       if (hash !== EXPECTED_HASH) return false;
