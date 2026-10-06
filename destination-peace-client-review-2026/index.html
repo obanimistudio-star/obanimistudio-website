@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="theme-color" content="#101a35" />
+  <title>Client Review | Destination of Peace Parish</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:linear-gradient(145deg,#081226,#172b51);font-family:Inter,Arial,sans-serif;color:#fff}
+    #gate{min-height:100vh;display:grid;place-items:center;padding:24px}
+    .card{width:min(560px,100%);padding:44px 28px;text-align:center;border:1px solid rgba(255,255,255,.17);border-radius:28px;background:rgba(255,255,255,.09);box-shadow:0 24px 70px rgba(0,0,0,.35)}
+    .lock{font-size:50px}
+    h1{margin:14px 0 10px;font-size:clamp(28px,6vw,44px)}
+    p{color:#d8e3f8;font-size:17px;line-height:1.55}
+    form{display:grid;gap:12px;margin-top:24px}
+    input{width:100%;padding:16px 18px;border:1px solid rgba(255,255,255,.24);border-radius:14px;background:#fff;color:#101a35;font-size:17px}
+    button{padding:16px 18px;border:0;border-radius:14px;background:#f4c84b;color:#101a35;font-size:17px;font-weight:800;cursor:pointer}
+    #error{min-height:24px;margin:4px 0 0;color:#ffb4b4;font-size:15px}
+    .brand{margin-top:22px;color:#f4c84b;font-weight:800;letter-spacing:.08em}
+    #root{min-height:100vh}
+    .banner-copy blockquote{display:block!important;margin:10px auto 2px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#fff!important;font-weight:800!important;-webkit-text-stroke:.35px #121d52!important;text-shadow:0 2px 2px #121d52,0 0 5px #121d52,0 0 12px rgba(255,255,255,.72)!important}
+    .banner-copy cite{display:block!important;max-width:min(760px,96%)!important;margin:0 auto!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#fff8d8!important;font-weight:900!important;-webkit-text-stroke:.35px #172052!important;text-shadow:0 2px 2px #172052,0 0 5px #172052,0 0 12px rgba(255,255,255,.78)!important}
+  </style>
+</head>
+<body>
+  <div id="gate">
+    <main class="card">
+      <div class="lock" aria-hidden="true">🔐</div>
+      <h1>Client review</h1>
+      <p>Welcome. Enter the private review password to view the Destination of Peace Parish website project.</p>
+      <form id="login">
+        <input id="password" type="password" autocomplete="current-password" placeholder="Client review password" aria-label="Client review password" required />
+        <button type="submit">View project</button>
+        <p id="error" role="alert"></p>
+      </form>
+      <div class="brand">OBANIMISTUDIO</div>
+    </main>
+  </div>
+  <div id="root" hidden></div>
+  <script>
+    const EXPECTED_HASH = 'b5df60ba20b22b70eccc48b8a3a625f985c664e0a4374711f09f43cf235e18a1';
+    const bytesToHex = bytes => Array.from(new Uint8Array(bytes)).map(b => b.toString(16).padStart(2,'0')).join('');
+    function applyReviewUpdates(scope = document.body) {
+      const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const value = walker.currentNode.nodeValue || '';
+        walker.currentNode.nodeValue = value
+          .replace(/time to be confirmed/gi, '10:00 pm')
+          .replace(/“Peace I leave with you; my peace I give you\.”/g, '“His Presence, Our Peace”')
+          .replace(/John 14:27/g, '“Now the God of peace be with you all. Amen.” — Romans 15:33');
+      }
+    }
+    const reviewObserver = new MutationObserver(() => applyReviewUpdates());
+    reviewObserver.observe(document.documentElement, {childList:true, subtree:true});
+    async function unlock(value) {
+      const hash = bytesToHex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)));
+      if (hash !== EXPECTED_HASH) return false;
+      sessionStorage.setItem('dop-client-review-unlocked','yes');
+      document.getElementById('gate').remove();
+      const root = document.getElementById('root');
+      root.hidden = false;
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = '../destination-of-peace/assets/index-CvPpojqM.css';
+      document.head.appendChild(css);
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = '../destination-of-peace/assets/hymn-selector-20261004.js';
+      document.body.appendChild(script);
+      return true;
+    }
+    document.getElementById('login').addEventListener('submit', async event => {
+      event.preventDefault();
+      const ok = await unlock(document.getElementById('password').value);
+      if (!ok) document.getElementById('error').textContent = 'Incorrect password. Please try again.';
+    });
+    if (sessionStorage.getItem('dop-client-review-unlocked') === 'yes') {
+      unlock('PeaceClient-5831');
+    }
+  </script>
+</body>
+</html>
