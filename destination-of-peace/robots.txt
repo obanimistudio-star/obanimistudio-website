@@ -1,4 +1,4 @@
 User-agent: *
-Allow: /
+Disallow: /
 
-Sitemap: https://obanimistudio.com/destination-of-peace/sitemap.xml
+# Private project preview. Do not index this area.
