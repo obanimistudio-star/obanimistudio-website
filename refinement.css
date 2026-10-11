@@ -9,3 +9,26 @@ body{font-size:17px;line-height:1.7}.nav{font-size:15px}.hero-text{font-size:20p
 
 /* 2026 premium refinement: accessible enquiry, lightweight motion and responsive polish */
 .enquiry-form{max-width:760px;display:grid;gap:13px;margin-top:28px}.enquiry-form label{font-weight:750}.enquiry-form select,.enquiry-form textarea{width:100%;box-sizing:border-box;padding:16px 18px;border:1px solid #a59b85;border-radius:14px;background:#fff;color:#171717;font:inherit}.enquiry-form textarea{resize:vertical}.enquiry-form .button{justify-self:start;cursor:pointer;border:0}.enquiry-note{font-size:14px;line-height:1.6}.enquiry-form :focus-visible,.nav a:focus-visible,.button:focus-visible{outline:3px solid #c58b19;outline-offset:4px}.project-card{transition:transform .25s ease,box-shadow .25s ease}.project-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(0,0,0,.12)}@media(max-width:600px){.enquiry-form{gap:11px}.enquiry-form .button{width:100%;justify-content:center}.project-card:hover{transform:none}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Accessible site-wide appearance themes: brand logo and layout remain unchanged. */
+.appearance-control{display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:13px;font-weight:700}.appearance-control select{font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:#191919;color:#f7f1e5;cursor:pointer;min-height:42px}.appearance-control select:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+html[data-theme="bright"]{--black:#f7f3e9;--black2:#fffaf0;--cream:#22201b;--muted:#514b40;--line:rgba(96,70,23,.25);--gold2:#8c6113}
+html[data-theme="bright"] body{background:linear-gradient(150deg,#fffaf1,#f0e8d8);color:#22201b}
+html[data-theme="bright"] .site-header{background:rgba(255,250,241,.97);border-bottom:1px solid #d6c6a8}
+html[data-theme="bright"] .brand-name,html[data-theme="bright"] .hero h1,html[data-theme="bright"] .statement h2,html[data-theme="bright"] .section-heading h2,html[data-theme="bright"] .about h2{color:#242019}
+html[data-theme="bright"] .hero-text,html[data-theme="bright"] .about-copy,html[data-theme="bright"] .statement p,html[data-theme="bright"] .service-card p,html[data-theme="bright"] .process-grid p{color:#514b40}
+html[data-theme="bright"] .hero h1 span{color:#986816;text-shadow:none}
+html[data-theme="bright"] .service-card,html[data-theme="bright"] .price-card:not(.recommended),html[data-theme="bright"] .process-grid li{background:#fffdf7;color:#252019;border-color:#dacbad}
+html[data-theme="bright"] .nav a{color:#26211b}html[data-theme="bright"] .nav-cta{color:#1b160f}html[data-theme="bright"] .menu-button{color:#241e14;border-color:#aa905e}
+html[data-theme="bright"] .appearance-control select{background:#fff;color:#242019;border-color:#aa905e}
+html[data-theme="bright"] .enquiry-note,html[data-theme="bright"] #testimonials>p{color:#514b40}
+html[data-theme="bright"] .contact-section,html[data-theme="bright"] .contact-section h2,html[data-theme="bright"] .contact-section p{color:#fff9e8}
+html[data-theme="cool"]{--black:#081824;--black2:#102b3b;--cream:#f0f8fb;--muted:#c3d6df;--line:rgba(121,208,217,.25);--gold2:#f1d68a}
+html[data-theme="cool"] body{background:radial-gradient(circle at 85% 10%,rgba(37,155,175,.18),transparent 35%),linear-gradient(140deg,#061622,#0d3042 55%,#071923);color:#f0f8fb}
+html[data-theme="cool"] .site-header{background:rgba(6,22,34,.94)}
+html[data-theme="cool"] .service-card,html[data-theme="cool"] .price-card:not(.recommended){background:rgba(16,56,72,.72);border-color:rgba(121,208,217,.25)}
+html[data-theme="cool"] .appearance-control select{background:#123547;color:#f0f8fb;border-color:#4b8997}
+html[data-theme="cool"] .contact-section{background:linear-gradient(120deg,#092c3e,#16546a 60%,#2d7886)}
+html[data-theme="cool"] .nav.open{background:#092536}
+@media(max-width:1040px){.appearance-control{justify-content:space-between;width:100%;padding:8px 0}.appearance-control select{min-width:140px}html[data-theme="bright"] .nav.open{background:#fffaf1;border-color:#d6c6a8}}
+@media(max-width:520px){.appearance-control select{min-height:44px}}
