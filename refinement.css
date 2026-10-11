@@ -53,3 +53,14 @@ html[data-theme="bright"] .nav.open{background:#fffaf1}
   html[data-theme="cool"] .nav.open{background:#092536}
 }
 @media(max-width:520px){.nav{left:18px;right:18px}}
+
+/* Theme reliability: visibly transform all main page surfaces, not just the header. */
+html[data-theme="bright"] .hero,html[data-theme="bright"] .statement,html[data-theme="bright"] .process-section,html[data-theme="bright"] .about,html[data-theme="bright"] #testimonials,html[data-theme="bright"] #enquiry,html[data-theme="bright"] .work-section,html[data-theme="bright"] .release-section{background:#fffaf1;color:#242019}
+html[data-theme="bright"] .hero-text,html[data-theme="bright"] .section p,html[data-theme="bright"] .process-grid p,html[data-theme="bright"] .release-copy>p:not(.eyebrow):not(.release-subtitle),html[data-theme="bright"] .about-copy{color:#514b40}
+html[data-theme="bright"] .project-card{background:#fffdf8;color:#242019;border-color:#d8c6a5}
+html[data-theme="bright"] .project-copy>p:not(.project-label){color:#514b40}
+html[data-theme="bright"] .nav.open{background:#fffaf1}
+html[data-theme="bright"] footer{color:#514b40}
+html[data-theme="cool"] .hero,html[data-theme="cool"] .statement,html[data-theme="cool"] .process-section,html[data-theme="cool"] .about,html[data-theme="cool"] #testimonials,html[data-theme="cool"] #enquiry,html[data-theme="cool"] .work-section,html[data-theme="cool"] .release-section{background:linear-gradient(145deg,#082433,#104054);color:#f0f8fb}
+html[data-theme="cool"] .process-grid li{background:#12394b;border-color:#438493}
+html[data-theme="cool"] .nav.open{background:#092536}
