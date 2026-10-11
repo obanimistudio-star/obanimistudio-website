@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ObanimiStudio creates websites, digital products and thoughtful visual design for people, businesses and communities. Explore personal music by founder Akinwale Bello.">
-  <meta name="theme-color" content="#090909">
+  <meta name="theme-color" content="#090909" id="browser-theme-color">
   <title>ObanimiStudio | Websites, Digital Products & Design</title>
   <link rel="canonical" href="https://obanimistudio.com/">
   <link rel="icon" href="assets/icons/app-icon-64.png" type="image/png">
@@ -36,6 +36,7 @@
     "duration":"PT1M13S",
     "embedUrl":"https://www.youtube-nocookie.com/embed/239E14XiRxs"
   }</script>
+  <script>try{const t=localStorage.getItem('obanimistudio-theme');if(['dark','bright','cool'].includes(t))document.documentElement.dataset.theme=t;}catch(e){}</script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="refinement.css">
 </head>
@@ -54,6 +55,7 @@
       <a href="#enquiry">Start a project</a>
       <a href="#latest-release">My Music</a>
       <a href="#about">About</a>
+      <div class="appearance-control"><label for="appearance-theme">Appearance</label><select id="appearance-theme" aria-label="Choose website appearance"><option value="dark">Dark</option><option value="bright">Bright</option><option value="cool">Cool</option></select></div>
       <a class="nav-cta" href="mailto:obanimistudio@gmail.com?subject=Request%20a%20Quote%20%E2%80%94%20ObanimiStudio">Request a Quote</a>
     </nav>
   </header>
