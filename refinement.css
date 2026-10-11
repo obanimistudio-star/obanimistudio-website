@@ -32,3 +32,11 @@ html[data-theme="cool"] .contact-section{background:linear-gradient(120deg,#092c
 html[data-theme="cool"] .nav.open{background:#092536}
 @media(max-width:1040px){.appearance-control{justify-content:space-between;width:100%;padding:8px 0}.appearance-control select{min-width:140px}html[data-theme="bright"] .nav.open{background:#fffaf1;border-color:#d6c6a8}}
 @media(max-width:520px){.appearance-control select{min-height:44px}}
+
+/* Keep the light service/pricing panels legible in Cool mode. */
+html[data-theme="cool"] #services,html[data-theme="cool"] .pricing-section{background:linear-gradient(145deg,#e9f4f4,#d7e8e8);color:#14252c}
+html[data-theme="cool"] #services .service-card,html[data-theme="cool"] .pricing-section .price-card:not(.recommended){background:#f8fcfb;color:#14252c;border-color:#adcdd0}
+html[data-theme="cool"] #services .service-card h3,html[data-theme="cool"] .pricing-section .price-card:not(.recommended) h3,html[data-theme="cool"] .pricing-section .price-card:not(.recommended) h3 strong{color:#14252c}
+html[data-theme="cool"] #services .service-card p,html[data-theme="cool"] .pricing-section .price-card:not(.recommended) p,html[data-theme="cool"] .pricing-section .price-card:not(.recommended) ul{color:#40565d}
+html[data-theme="cool"] #services .card-link,html[data-theme="cool"] #services .eyebrow,html[data-theme="cool"] .pricing-section .eyebrow{color:#12566a}
+html[data-theme="bright"] .nav.open{background:#fffaf1}
