@@ -64,3 +64,8 @@ html[data-theme="bright"] footer{color:#514b40}
 html[data-theme="cool"] .hero,html[data-theme="cool"] .statement,html[data-theme="cool"] .process-section,html[data-theme="cool"] .about,html[data-theme="cool"] #testimonials,html[data-theme="cool"] #enquiry,html[data-theme="cool"] .work-section,html[data-theme="cool"] .release-section{background:linear-gradient(145deg,#082433,#104054);color:#f0f8fb}
 html[data-theme="cool"] .process-grid li{background:#12394b;border-color:#438493}
 html[data-theme="cool"] .nav.open{background:#092536}
+
+/* Bright mode: make the existing revolving gold rings readable on ivory. */
+html[data-theme="bright"] .hero-brand .gold-ring{border-color:rgba(150,99,12,.65);box-shadow:0 0 0 1px rgba(174,123,32,.12),0 0 24px rgba(157,106,16,.12)}
+html[data-theme="bright"] .hero-brand .ring-two{border-color:rgba(165,110,18,.5)}
+html[data-theme="bright"] .hero-logo{box-shadow:0 24px 65px rgba(62,42,9,.24),0 0 30px rgba(172,113,12,.17)}
