@@ -1,0 +1,74 @@
+// Runs exclusively in a disposable local PGlite database, never against Supabase.
+// Dependency: @electric-sql/pglite@0.3.14; node portal/tests/security.mjs
+import { PGlite } from '@electric-sql/pglite';
+import { readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const db = new PGlite();
+const admin = '00000000-0000-0000-0000-000000000001';
+const alice = '00000000-0000-0000-0000-000000000002';
+const bob = '00000000-0000-0000-0000-000000000003';
+const outsider = '00000000-0000-0000-0000-000000000004';
+const project = '10000000-0000-0000-0000-000000000001';
+const other = '10000000-0000-0000-0000-000000000002';
+let checks=0;
+await db.exec(`create role anon; create role authenticated; create schema auth;
+create table auth.users(id uuid primary key);
+create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+grant usage on schema auth to authenticated; grant execute on function auth.uid() to authenticated;
+-- Model Supabase's broad legacy default grants, including TRUNCATE.
+alter default privileges in schema public grant all on tables to anon,authenticated;
+insert into auth.users values('${admin}'),('${alice}'),('${bob}'),('${outsider}');`);
+await db.exec(await readFile(new URL('../schema.sql', import.meta.url), 'utf8'));
+await db.exec(`insert into public.portal_members values('${admin}','admin','Admin'),('${alice}','client','Alice'),('${bob}','client','Bob');
+insert into public.client_projects(id,title,status) values('${project}','Alice project','review'),('${other}','Bob project','planning');
+insert into public.project_members values('${project}','${alice}'),('${other}','${bob}');`);
+async function asUser(id) { await db.exec(`reset role; select set_config('request.jwt.claim.sub','${id||''}',false); set role ${id ? 'authenticated' : 'anon'};`); }
+async function denied(sql) { let rejected=false;try { await db.exec(sql); } catch { rejected=true; } assert.ok(rejected, 'Must deny: '+sql);checks++; }
+async function count(sql, n) { const result=await db.query(sql);assert.equal(result.rows.length,n);checks++; }
+await asUser(null);
+await denied('select * from public.client_projects');
+await denied('truncate public.client_projects cascade');
+await asUser(alice);
+await count('select * from public.client_projects',1);
+await count(`select * from public.client_projects where id='${other}'`,0);
+await count('select * from public.portal_members',1);
+await denied(`update public.portal_members set role='admin' where user_id='${alice}'`);
+await denied(`insert into public.portal_members values('${outsider}','admin','Intruder')`);
+await denied(`insert into public.project_members values('${other}','${alice}')`);
+await denied('truncate public.client_projects cascade');
+await count(`update public.client_projects set title='Tampered' where id='${project}' returning id`,0);
+await denied(`insert into public.project_feedback(project_id,author_id,message) values('${other}','${alice}','Cross-client')`);
+await denied(`insert into public.project_feedback(project_id,author_id,message) values('${project}','${bob}','Forged')`);
+await db.exec(`insert into public.project_feedback(project_id,author_id,message) values('${project}','${alice}','Allowed')`);checks++;
+await denied(`insert into public.project_approvals(project_id,author_id,revision,decision) values('${project}','${alice}',999,'approved')`);
+await db.exec(`insert into public.project_approvals(project_id,author_id,revision,decision) values('${project}','${alice}',1,'approved')`);checks++;
+await denied(`insert into public.project_approvals(project_id,author_id,revision,decision) values('${project}','${alice}',1,'approved')`);
+await denied(`update public.project_approvals set note='Changed history'`);
+await denied(`delete from public.project_approvals`);
+await denied('select * from private.portal_audit');
+await asUser(bob);
+await count('select * from public.project_feedback',0);
+await denied(`insert into public.project_approvals(project_id,author_id,revision,decision) values('${other}','${bob}',1,'approved')`);
+await asUser(outsider);
+await count('select * from public.client_projects',0);
+await asUser(admin);
+await count('select * from public.client_projects',2);
+await denied(`insert into public.portal_members values('${outsider}','admin','Promotion')`);
+await db.exec(`insert into public.portal_members values('${outsider}','client','New client')`); checks++;
+await denied(`update public.client_projects set revision=999 where id='${project}'`);
+await db.exec(`update public.client_projects set summary='New work' where id='${project}'`);
+assert.equal((await db.query(`select revision from public.client_projects where id='${project}'`)).rows[0].revision,2);checks++;
+await count(`delete from public.portal_members where user_id='${admin}' returning user_id`,0);
+await asUser(alice);
+await denied(`insert into public.project_approvals(project_id,author_id,revision,decision) values('${project}','${alice}',1,'approved')`);
+await db.exec(`insert into public.project_approvals(project_id,author_id,revision,decision,note) values('${project}','${alice}',2,'changes_requested','Please adjust')`);checks++;
+await asUser(admin);
+await db.exec(`delete from public.project_members where project_id='${project}' and user_id='${alice}'`);
+await asUser(alice);
+await count('select * from public.client_projects',0);
+await count('select * from public.project_feedback',0);
+await count('select * from public.project_approvals',0);
+await db.exec('reset role');
+assert.ok((await db.query('select * from private.portal_audit')).rows.length>=8);checks++;
+await db.close();
+console.log(`${checks} disposable database security checks passed. No Supabase connection used.`);
