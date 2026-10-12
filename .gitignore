@@ -38,3 +38,12 @@ confidential/
 client-private/
 invoices/
 contracts/
+
+# Additional private master/backup exclusions (tracked history is unaffected).
+!.env.sample
+!.env.template
+private-master/
+private-templates/
+private-client-data/
+backups/
+*.bundle

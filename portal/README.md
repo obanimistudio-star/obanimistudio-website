@@ -1,6 +1,6 @@
 # Consolidated ObanimiStudio portal — development only
 
-Continues draft PR #41 and replaces the competing PR #39 / #40 proposals. Do not merge those proposals alongside this one. Only `portal/` changes; the homepage, domain, branding, themes and church/client project files remain unchanged.
+Continues draft PR #41 and replaces the competing PR #39 / #40 proposals. Do not merge those proposals alongside this one. Dashboard changes are isolated to `portal/`; repository safeguards also extend `.gitignore`. the homepage, domain, branding, themes and church/client project files remain unchanged.
 
 ## Current state
 
@@ -36,3 +36,7 @@ Real Supabase authentication, PostgREST permissions, invitation/email delivery, 
 
 - https://supabase.com/docs/guides/database/postgres/row-level-security
 - https://supabase.com/docs/guides/auth/server-side/advanced-guide
+
+## Repository protection draft
+
+The root ignore rules exclude additional private template/master folders and backups. Ignore rules do not remove committed files or history. `python3 portal/tests/credential_guard.py` checks staged files and exits nonzero on recognised credential patterns or sensitive filenames; it never prints matched values. `--self-test` runs synthetic checks. This script is not yet enforced by GitHub push rules, CI or the owner's workstation. Provider secret scanning/push protection and account MFA require separate settings review. Do not treat this public development branch as private storage.
