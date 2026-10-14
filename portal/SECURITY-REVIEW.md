@@ -1,6 +1,6 @@
 # Development security review
 
-Scope: current tracked repository files and consolidated portal changes. No Supabase queries or configuration changes. No main-branch writes or deployment. No full-history or compiled-asset reverse-engineering audit has been completed.
+Scope: current tracked repository files and consolidated portal changes. The initial review used no hosted queries; staging follow-up results are recorded below. No main-branch writes or deployment. No full-history or compiled-asset reverse-engineering audit has been completed.
 
 ## Findings addressed in this draft
 
@@ -22,8 +22,12 @@ Public business contact addresses occur in current site files; the scan did not 
 
 ## Open release work
 
-Live multi-account/API isolation tests, existing-object inspection, admin MFA, project-specific CSP, immutable review artifacts, privacy/retention/offboarding decisions, full-history credential assessment and private asset migration. No guarantee of complete privacy or production readiness is made.
+Authenticated HTTP isolation/write tests, concurrent edit/approval behavior, expiry, immutable review artifacts, privacy/retention/offboarding decisions, full-history credential assessment and private asset migration. Administrator MFA and project-specific CSP have been implemented; hosted policy verification remains a separate check. No guarantee of complete privacy or production readiness is made.
 
 ## Validation completed for this draft
 
-34 disposable local database security checks passed. Mocked browser checks passed for setup blocking, safe rendering and links, project creation, assignments, client version approval and late-response clearing after sign-out; zero external requests were made by those checks. The pinned SDK dependency audit reported zero known vulnerabilities at review time. JavaScript syntax and git whitespace checks passed.
+50 disposable local database security checks passed, including administrator MFA enforcement. Mocked browser checks passed for setup blocking, safe rendering and links, project creation, assignments, client version approval and late-response clearing after sign-out; zero external requests were made by those checks. The pinned SDK dependency audit reported zero known vulnerabilities at review time. JavaScript syntax and git whitespace checks passed.
+
+## Staging follow-up — 14 October 2026
+
+Owner screenshots and confirmation show UI deployment, portal administrator TOTP enrollment, successful migration execution, a fresh MFA sign-in, and an unassigned-client empty view after the upgrade. Five signed-out REST reads were denied with HTTP 401 / code 42501. Automated Pages asset downloads were blocked with HTTP 403. Hosted authenticated HTTP writes, guessed-ID tests, concurrency, expiry and private asset protection remain unresolved. A rollback-only SQL role/assurance check is supplied in tests/hosted-access.sql; it has not been run against the hosted database by this agent.

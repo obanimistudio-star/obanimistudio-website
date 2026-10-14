@@ -5,7 +5,7 @@ Continues draft PR #41 and replaces the competing PR #39 / #40 proposals. Do not
 ## Current state
 
 - Public browser configuration targets the existing Free Supabase project and the staging portal callback. It contains a publishable key only.
-- The existing staging schema and two-client assignment/revocation flow were exercised manually. `schema.sql` is for a new installation only; never rerun it over the existing database. `migrations/001_admin_mfa.sql` is the separate, repeatable upgrade for administrator MFA and has not been applied live.
+- The existing staging schema and two-client assignment/revocation flow were exercised manually. `schema.sql` is for a new installation only; never rerun it over the existing database. `migrations/001_admin_mfa.sql` is the separate, repeatable upgrade for administrator MFA; the owner applied it on 14 October 2026.
 - No credentials, client records or private templates are included. This repository and its development branches are public.
 - Project creation/editing, invited-client registration and assignment/removal controls are drafted. Invitations are intentionally done privately in Supabase; no privileged key belongs in browser code.
 - Database grants reset PUBLIC/anon/authenticated defaults before applying narrow permissions, including removal of TRUNCATE and role-change access.
@@ -43,3 +43,11 @@ Administrator MFA enforcement fails closed in the database, including direct API
 ## Repository protection draft
 
 The root ignore rules exclude additional private template/master folders and backups. Ignore rules do not remove committed files or history. `python3 portal/tests/credential_guard.py` checks staged files and exits nonzero on recognised credential patterns or sensitive filenames; it never prints matched values. `--self-test` runs synthetic checks. This script is not yet enforced by GitHub push rules, CI or the owner's workstation. Provider secret scanning/push protection still require settings review. Dashboard account MFA and a backup authenticator were confirmed separately; portal MFA remains a staging rollout task. Do not treat this public development branch as private storage.
+
+## Staging verification — 14 October 2026
+
+The owner deployed the MFA ZIP to the staging Pages project, enrolled the portal administrator, applied `001_admin_mfa.sql` successfully, and confirmed a fresh sign-in required an authenticator code before projects loaded. The unassigned test client still saw no assigned projects and no administrator controls. These are owner-reported UI results, not captured authenticated API tests.
+
+A subsequent signed-out REST check returned HTTP 401 / PostgreSQL 42501 for each of the five portal tables. Automated staging asset downloads returned HTTP 403, so exact deployed-byte comparison remains unverified.
+
+`tests/hosted-access.sql` is ready for the owner to run as postgres in the existing project's SQL Editor. It produces 19 PASS/FAIL results using simulated authenticated roles and assurance claims, then rolls back all temporary objects/settings. It does not change projects/accounts, mint real tokens, or replace authenticated HTTP and concurrency checks. Missing test prerequisites deliberately fail rather than passing vacuously.
