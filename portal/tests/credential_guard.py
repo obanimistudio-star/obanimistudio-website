@@ -53,12 +53,13 @@ def self_test():
 
 if __name__=='__main__':
     if '--self-test' in sys.argv:self_test();sys.exit(0)
+    root=subprocess.check_output(['git','rev-parse','--show-toplevel']).decode().strip()
     tracked='--tracked' in sys.argv
     command=['git','ls-files','-z'] if tracked else ['git','diff','--cached','--name-only','--diff-filter=ACMR','-z']
-    paths=subprocess.check_output(command).decode().split('\0')
+    paths=subprocess.check_output(command,cwd=root).decode().split('\0')
     blocked=False
     for path in filter(None,paths):
-        data=subprocess.check_output(['git','show',':'+path])
+        data=subprocess.check_output(['git','show',':'+path],cwd=root)
         for label in findings(path,data):
             print(f'BLOCKED: {path} — {label}',file=sys.stderr);blocked=True
     if blocked:
