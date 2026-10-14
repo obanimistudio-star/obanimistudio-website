@@ -39,6 +39,8 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
       - run: npm run security
+      - run: npm run reviews
+      - run: node config.mjs
       - run: npm run concurrency
       - run: npm run browser
       - run: python3 credential_guard.py --self-test

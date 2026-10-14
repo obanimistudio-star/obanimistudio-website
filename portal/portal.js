@@ -1,13 +1,16 @@
 // Browser roles control presentation only. Database grants, RLS and triggers authorize writes.
 import { validConfig, safePreview } from './validation.js';
 import { createMfaGate } from './mfa.js';
+import { createReviewFiles } from './reviews.js';
 const $ = id => document.getElementById(id);
 const node = (tag, value) => { const e = document.createElement(tag); if (value !== undefined) e.textContent = String(value); return e; };
 const notice = message => { $('notice').textContent = message; };
 const cfg = window.OBANIMI_PORTAL_CONFIG || {};
-let mfa;
-const clearPrivate = () => { mfa?.clear(); $('projects').replaceChildren(); $('admin').replaceChildren(); $('dashboard').hidden = true; };
-if (!validConfig(cfg)) {
+let mfa, reviews;
+const clearPrivate = () => { mfa?.clear(); reviews?.clear(); $('projects').replaceChildren(); $('admin').replaceChildren(); $('dashboard').hidden = true; };
+if (window.self !== window.top) {
+  notice('Open this portal directly in your browser to sign in.');
+} else if (!validConfig(cfg)) {
   notice('Setup pending. No client information is available.');
 } else {
   import('./vendor/supabase.js').then(async ({ createClient }) => {
@@ -22,6 +25,7 @@ if (!validConfig(cfg)) {
       }, storageKey: 'obanimi-portal-auth'
     }});
     let epoch = 0;
+    reviews = createReviewFiles(db, { notice });
     mfa = createMfaGate(db, { container: $('mfa'), notice, onVerified: () => refresh() });
     const field = (form, label, type = 'input', value = '') => {
       const wrap = node('label', label), input = node(type); input.value = value; wrap.append(input); form.append(wrap); return input;
@@ -45,6 +49,7 @@ if (!validConfig(cfg)) {
       status.value = project?.status || 'planning';
       const progress = field(form, 'Progress (%)', 'input', String(project?.progress || 0)); progress.type = 'number'; progress.min = 0; progress.max = 100; progress.step = 1; progress.required = true;
       const preview = field(form, 'HTTPS preview URL (optional)', 'input', project?.preview_url || ''); preview.type = 'url'; preview.maxLength = 2048;
+      form.append(node('p', 'Website links have their own access settings. Use private review files below for confidential PDFs and images.'));
       const button = node('button', project ? 'Save project' : 'Create project'); form.append(button);
       form.addEventListener('submit', e => {
         e.preventDefault(); const url = preview.value.trim();
@@ -96,7 +101,9 @@ if (!validConfig(cfg)) {
         const card = node('article'); card.className = 'card';
         card.append(node('h3', project.title), node('p', project.summary), node('p', `${project.status.replaceAll('_', ' ')} · ${project.progress}% · Version ${project.revision}`));
         const progress = node('progress'); progress.max = 100; progress.value = project.progress; progress.setAttribute('aria-label', 'Project progress'); card.append(progress);
-        const url = safePreview(project.preview_url); if (url) { const a = node('a', 'Open project preview ↗'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; card.append(a); }
+        const url = safePreview(project.preview_url); if (url) { const a = node('a', 'Open website preview ↗'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; card.append(a,node('p','This website link has separate access settings.')); }
+        await reviews.render(card, project, isAdmin, current, refresh);
+        if (!current()) return;
         const activity = node('div'); activity.className = 'activity'; card.append(node('h4', 'Feedback and decisions'), activity);
         const [feedback, approvals] = await Promise.all([
           db.from('project_feedback').select('message,created_at').eq('project_id', project.id).order('created_at', { ascending: false }).limit(20),
@@ -106,17 +113,7 @@ if (!validConfig(cfg)) {
         if (feedback.error || approvals.error) activity.append(node('p', 'Activity could not be loaded.'));
         else {
           for (const item of feedback.data) activity.append(node('p', `Feedback · ${item.message}`));
-          for (const item of approvals.data) activity.append(node('p', `Version ${item.revision}${item.revision !== project.revision ? ' (previous)' : ''} · ${item.decision.replaceAll('_', ' ')} · ${item.note}`));
-        }
-        const form = node('form'), input = field(form, 'Feedback', 'textarea'); input.required = true; input.maxLength = 3000;
-        const send = node('button', 'Send feedback'); form.append(send); card.append(form);
-        form.addEventListener('submit', e => { e.preventDefault(); const message = input.value.trim(); if (message) run(send, () => db.from('project_feedback').insert({ project_id: project.id, author_id: user.id, message }), 'Feedback saved.'); });
-        if (!isAdmin && project.status === 'review') {
-          for (const [decision, label] of [['approved', 'Approve this version'], ['changes_requested', 'Request changes']]) {
-            const button = node('button', label); button.type = 'button'; card.append(button);
-            button.addEventListener('click', () => {
-              const note = window.prompt(decision === 'approved' ? `Confirm approval of version ${project.revision}. Optional note:` : 'Describe the changes requested');
-              if (note === null || note.length > 3000 || (decision === 'changes_requested' && !note.trim())) return;
+          for (const item of approvals.data) activity.append(node('p',…301 tokens truncated…cision === 'changes_requested' && !note.trim())) return;
               run(button, () => db.from('project_approvals').insert({ project_id: project.id, author_id: user.id, revision: project.revision, decision, note: note.trim() }), 'Decision recorded.');
             });
           }

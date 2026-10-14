@@ -75,3 +75,16 @@ The owner supplied screenshots and confirmed these deployed staging flows after 
 These are successful real-session UI workflows, which use the hosted API. They do not prove arbitrary forged/guessed-ID requests are denied. No further owner screenshot requests are pending. The final test state leaves Test Client 2 unassigned and preserves its test feedback; the test project remains at 10% / revision 2.
 
 The portal remains on staging and PR #41 remains draft. Main-domain publishing, merge, private-preview migration and any paid upgrade have not been performed. Actual hosted denied-request testing needs an authenticated test session accessible to the test runner; the owner's tablet login cannot supply that here. Do not transfer tokens or credentials through chat. Public preview files remain public, and no private source/template protection is claimed.
+
+
+## Private review delivery upgrade (prepared; not yet deployed)
+
+`migrations/002_private_reviews.sql` creates the dedicated private bucket `obanimistudio-portal-reviews`, limited to PDF/PNG/JPEG/WebP review files up to 10 MB. Apply it only after 001. It does not move or privatise any existing public website files. The private-file UI and migration must both be deployed and verified before use.
+
+Every download uses the signed-in user's authenticated Storage request; no public or signed bearer URLs are produced. Clients can read files only while assigned. Administrator upload requires MFA, the current project revision and no existing decision for that revision. A project row lock serializes uploads with edits/decisions. Restrictive bucket policies prevent unrelated permissive Storage policies bypassing these limits. Other buckets are unchanged. Browser overwrite/delete is disabled; a new project version needs fresh review files. Already-downloaded copies cannot be recalled.
+
+Review files provide confidential PDF/image review, not private hosting for interactive websites or source templates. Existing website previews retain their own access settings. Keep confidential source outside public GitHub and public website directories.
+
+Production preparation: callback config now selects only the exact main or staging callback for its current origin; unknown origins fail setup. Both exact callbacks must be verified in Supabase Auth before publishing. The existing public-site service worker bypasses portal and Supabase requests. Cloudflare `_headers` rules apply only to /portal/*; GitHub Pages ignores this file, so main-site response-header protection requires hosting configuration. The portal also blocks its UI/authentication when framed.
+
+Release remains blocked until the connected Supabase commands are callable, 002 is applied to the intended project, private Storage upload/download/revocation and actual hosted denied requests are verified, and the main callback is confirmed. The owner has authorised publication once the checks pass. Do not merge or publish the unverified upgrade.

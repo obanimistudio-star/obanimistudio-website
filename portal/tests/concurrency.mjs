@@ -40,6 +40,13 @@ try {
   alter default privileges in schema public grant all on tables to anon,authenticated;
   insert into auth.users values('${admin}'),('${alice}'),('${bob}');`);
   await db.query(await readFile(new URL('../schema.sql', import.meta.url), 'utf8'));
+  await db.query(`create schema storage;
+    create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
+    create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text,name text,unique(bucket_id,name));
+    alter table storage.objects enable row level security;
+    grant usage on schema storage to authenticated,anon;
+    grant select,insert,update,delete on storage.objects to authenticated,anon;`);
+  await db.query(await readFile(new URL('../migrations/002_private_reviews.sql', import.meta.url), 'utf8'));
   await db.query(`insert into public.portal_members values
     ('${admin}','admin','Admin'),('${alice}','client','Alice'),('${bob}','client','Bob');
     insert into public.client_projects(id,title,status) values('${project}','Concurrent test','review');
@@ -105,7 +112,25 @@ try {
     assert.equal(a.rowCount,1); assert.ifError(b.error); assert.equal(b.result.rowCount,1);
     assert.equal((await db.query('select * from public.project_approvals where revision=$1',[rev])).rowCount,2);
   });
-  console.log(`${checks} real concurrent transaction scenarios passed: competing saves, edit before approval, approval before edit, duplicate decision, independent reviewers. No Supabase connection used.`);
+  const upload=(c,version)=>c.query('insert into storage.objects(bucket_id,name) values($1,$2) returning name',
+    ['obanimistudio-portal-reviews',`${project}/${version}/${randomUUID()}.pdf`]);
+  await db.query('update public.client_projects set summary=$1 where id=$2',['Review file race',project]);
+  rev=await revision();
+  await race(admin,alice,c=>upload(c,rev),c=>approve(c,alice,rev),async(a,b)=>{
+    assert.equal(a.rowCount,1);assert.ifError(b.error);assert.equal(b.result.rowCount,1);
+  });
+  await db.query('update public.client_projects set summary=$1 where id=$2',['Frozen review',project]);
+  rev=await revision();
+  await race(alice,admin,c=>approve(c,alice,rev),c=>upload(c,rev),async(a,b)=>{
+    assert.equal(a.rowCount,1);assert.equal(b.error?.code,'42501');
+    assert.equal((await db.query("select * from storage.objects where name like $1",[`${project}/${rev}/%`])).rowCount,0);
+  });
+  await db.query('update public.client_projects set summary=$1 where id=$2',['Stale upload',project]);
+  rev=await revision();
+  await race(admin,admin,c=>edit(c,rev,'Newer review'),c=>upload(c,rev),async(a,b)=>{
+    assert.equal(a.rowCount,1);assert.equal(b.error?.code,'42501');
+  });
+  console.log(`${checks} real concurrent transaction scenarios passed: competing saves, edit before approval, approval before edit, duplicate decision, independent reviewers, upload before decision, decision before upload, stale upload after edit. No Supabase connection used.`);
 } finally {
   await Promise.allSettled(sessions.map(c=>c.end()));
   if (created) await owner.query(`drop database ${name} with (force)`);

@@ -43,3 +43,10 @@ Browser regression coverage now includes rejected stale saves (including the rev
 Owner screenshots confirm administrator update to 10% / revision 2, assignment grant, assigned-client read, new client feedback and revocation. The owner confirmed persistence of the administrator update after refresh. After access removal, the client refresh showed No projects assigned yet. This establishes these successful hosted API paths through the deployed UI, not arbitrary HTTP denial tests. The test client is left unassigned. Existing feedback is retained; no accounts or project records were deleted.
 
 The portal CI workflow also scans all tracked index files for recognised credential patterns using `credential_guard.py --tracked`. It reports only paths and categories. This is not a full-history scan or a guarantee that no secret exists. No production release, private asset migration or paid plan change was made.
+
+
+## Private review delivery preparation
+
+The new review module uses a private Storage bucket and authenticated downloads, with per-project/revision paths, administrator MFA, client assignment checks, immutable objects and closed uploads after the first decision. Uploads lock the project row to serialize against decisions and edits. A disposable Storage/RLS model includes deliberately broad legacy policies to test the restrictive boundaries. Native concurrency coverage adds upload/approval/edit races. Hosted Storage behavior is still unverified until migration 002 is applied and real HTTP checks pass.
+
+The root service worker bypasses portal/Supabase requests; main/staging callbacks are origin-specific and unknown origins fail closed. Cloudflare-only header rules are supplied; these are not applied by GitHub Pages. Framed portal UI is blocked before Auth starts. These changes are prepared in the draft and are not a production deployment. Public preview sources remain public; protected PDF/image delivery does not retroactively privatise them.

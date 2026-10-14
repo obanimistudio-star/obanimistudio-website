@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "security": "node security.mjs",
+    "reviews": "node reviews.mjs",
     "browser": "node browser.cjs",
     "concurrency": "node concurrency.mjs"
   },
