@@ -74,3 +74,10 @@ Live checks cover real AAL1/AAL2 sessions, guessed IDs, client isolation, forbid
 The temporary endpoint was replaced with a JWT-required 410 stub. Independent SQL confirmed zero synthetic Auth users, projects and private review objects remain; a sign-out warning for an old test token did not prevent deletion. Private audit events are retained. Actual JWT lifetimes were bounded to one hour; elapsed-time expiry is not claimed. Existing manual UI evidence and isolated native concurrency checks remain applicable.
 
 Owner dashboard action needed: Authentication > URL Configuration > Redirect URLs, add exactly https://obanimistudio.com/portal/ and retain https://obanimistudio-staging.pages.dev/portal/. The connector has no Auth configuration update operation. No plan changes, production deployment or changes to existing client projects were made.
+
+
+## Main callback release gate completed — 14 October 2026
+
+The owner added the exact main callback in Auth URL Configuration. A fresh hosted Auth generateLink check verified both https://obanimistudio.com/portal/ and the staging callback. The disposable callback-check user was deleted, and the test endpoint was again retired to a JWT-required 410 stub. All 50 hosted test conditions are now covered as passing across the full run and callback recheck. No email was sent by these checks.
+
+Workflow 38626673784 completed successfully for b4ca619, including the fresh private download transport, browser, database, Storage, concurrency and credential checks. The release adds a Client portal footer link while preserving homepage branding, themes, animations and existing project files. Owner publication approval is already recorded. Historical pending-state notes above describe earlier checkpoints and are superseded by this release gate result.

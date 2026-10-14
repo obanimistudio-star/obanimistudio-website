@@ -219,9 +219,15 @@
   "cleanupNote": "Sign-out returned one warning for a superseded test token. Independent SQL confirmed every synthetic Auth user, project and Storage object was removed. Private operational audit records remain.",
   "retirement": "Function replaced with a JWT-required 410 stub after execution.",
   "limitations": [
-    "Main callback is not yet allowlisted.",
     "Expiry checks assert real token lifetime <= one hour; they do not wait for token expiry.",
     "Previously downloaded/cached copies cannot be recalled. Portal fetches now use a unique query per download and cache:no-store.",
     "Updated UI is not deployed to staging or main yet."
-  ]
+  ],
+  "callbackRecheck": {
+    "main": true,
+    "staging": true,
+    "cleanup": true,
+    "functionVersion": 9
+  },
+  "allConditionsVerified": 50
 }
