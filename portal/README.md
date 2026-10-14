@@ -4,8 +4,8 @@ Continues draft PR #41 and replaces the competing PR #39 / #40 proposals. Do not
 
 ## Current state
 
-- Supabase is not connected: config.js has blank URL/key values.
-- schema.sql has NOT run against the owner's Supabase project. It is an atomic, new-install proposal, not an upgrade migration. Existing objects and policies must be inspected first.
+- Public browser configuration targets the existing Free Supabase project and the staging portal callback. It contains a publishable key only.
+- The existing staging schema and two-client assignment/revocation flow were exercised manually. `schema.sql` is for a new installation only; never rerun it over the existing database. `migrations/001_admin_mfa.sql` is the separate, repeatable upgrade for administrator MFA and has not been applied live.
 - No credentials, client records or private templates are included. This repository and its development branches are public.
 - Project creation/editing, invited-client registration and assignment/removal controls are drafted. Invitations are intentionally done privately in Supabase; no privileged key belongs in browser code.
 - Database grants reset PUBLIC/anon/authenticated defaults before applying narrow permissions, including removal of TRUNCATE and role-change access.
@@ -14,23 +14,26 @@ Continues draft PR #41 and replaces the competing PR #39 / #40 proposals. Do not
 - Administrator roles are provisioned privately after owner approval. Browser writes cannot create/promote/delete an administrator.
 - Audit records are in a private table with no browser read/write grants. They record actor/object/action/time, not message contents. This is an operational log, not a tamper-proof archive against the database owner.
 - Auth access/refresh tokens use per-tab sessionStorage. Only the one-time PKCE verifier uses a portal-specific localStorage key so email callbacks can open a new tab in the same browser; the SDK removes it after exchange. Links opened on another device/browser must be requested again there. Multiple pending link requests may replace the verifier. Auth clears displayed private data on session changes/sign-out. A generation check prevents stale async reads restoring prior data.
-- No CDN runtime dependency; the pinned Supabase SDK is bundled locally. CSP limits scripts/styles to this origin and connections to Supabase. Before release narrow connect-src to the actual project. Meta CSP cannot enforce frame-ancestors; frame protection requires a hosting response header.
+- No CDN runtime dependency; the pinned Supabase SDK is bundled locally. CSP limits scripts/styles to this origin and connections to Supabase. connect-src is restricted to the configured project. Meta CSP cannot enforce frame-ancestors; frame protection requires a hosting response header.
 
 ## Checks
 
-`node portal/tests/security.mjs` uses @electric-sql/pglite 0.3.14 and an in-memory, disposable PostgreSQL database. It never connects to Supabase. It exercises anonymous access, broad legacy default grants/TRUNCATE, client isolation, role escalation, forged feedback, stage/version approvals, immutable decisions, admin workflows, revocation and audit recording.
+`node portal/tests/security.mjs` uses @electric-sql/pglite 0.3.14 and an in-memory, disposable PostgreSQL database. It never connects to Supabase. It exercises anonymous access, broad legacy default grants/TRUNCATE, client isolation, role escalation, forged feedback, stage/version approvals, immutable decisions, admin workflows, revocation, audit recording and database-level administrator MFA, including administrators with client assignments and repeated migration application.
 
-`node portal/tests/browser.cjs` uses Playwright with a temporary local server it starts on port 8765 and a mocked Supabase module. It does not use real accounts. It exercises blank configuration, safe rendering/URLs, creation, assignments and sign-out clearing.
+`node portal/tests/browser.cjs` uses Playwright with a temporary local server it starts on port 8765 and a mocked Supabase module. It does not use real accounts. It exercises blank configuration, safe rendering/URLs, creation, assignments and sign-out clearing, administrator MFA setup, rejected codes, verification, existing factors and QR/key clearing.
 
 Real Supabase authentication, PostgREST permissions, invitation/email delivery, simultaneous database transactions, expiry and multi-account RLS remain mandatory before launch. Local checks are not production certification.
 
-## Next approval gates
+## Staging rollout and remaining checks
 
-1. Review the proposed installation and existing Supabase objects without exposing secrets. Obtain separate approval before configuring Auth, connecting the website, executing SQL or bootstrapping an administrator. Disable public signup, use invited verified accounts, exact redirect `https://obanimistudio.com/portal/`, and verify email delivery/rate limits on the existing Free project. Do not upgrade plans.
-2. After approved installation, test admin, client A, client B and an unregistered authenticated account directly through the API. Test guessed IDs, role/membership writes, access removal, logout/expiry, stale approval/edit conflicts and project sharing. Require administrator MFA before handling real client data; enforcement/setup remain a launch task.
-3. Privately decide what client data to retain and how to export/delete it on offboarding. Current auth-user deletion is blocked by authored feedback/approvals, intentionally requiring an approved retention decision first.
-4. Resolve existing public preview/template exposure. GitHub Pages, unguessable paths, noindex and browser password checks are not access controls. Store truly private assets behind authenticated storage/backend delivery; preserve existing public websites until an owner-approved migration is ready.
-5. Obtain separate merge/publishing approval only after all release checks pass. Do not deploy the development branch.
+1. Keep this PR in draft. Deploy the updated portal UI to staging first, preserving the exact staging callback in Supabase Auth. Do not publish to the main domain or merge this branch.
+2. With owner dashboard access retained, inspect the existing policies and apply only `migrations/001_admin_mfa.sql` in the existing project's SQL editor. The migration is transactional and repeatable; it adds restrictive policies without changing roles, assignments or project data. It blocks administrator project access until an aal2 session is present, while allowing the administrator's own membership read for enrollment. All original authorization policies still apply.
+3. Sign in to the staging portal as its administrator. Select **Set up portal authenticator**, scan its new QR, and verify a fresh code. Supabase dashboard MFA and its backup are already enrolled, but they do not enroll this separate portal account. Keep QR images, manual keys and codes private.
+4. Verify authenticated API access at aal1 and aal2, client A/client B isolation, guessed IDs, forbidden role/membership writes, access removal, logout/expiry and concurrent edit/approval conflicts against staging. Local tests use a disposable database and mocked Auth only; they do not certify the hosted deployment. Existing manual UI tests confirmed assignment separation and no-projects views after revocation.
+5. Decide privately what client data to retain/export/delete on offboarding. Auth-user deletion is blocked by authored feedback/approvals. Resolve private preview/template delivery separately: public websites and unguessable paths do not provide authenticated asset access. Preserve current public sites until an approved migration is ready.
+6. Obtain explicit merge/production publishing approval after release checks pass. Stay on the Free plan.
+
+Administrator MFA enforcement fails closed in the database, including direct API calls and client-assignment paths. A dashboard database owner remains able to manage account recovery; no dashboard credentials belong in this repository.
 
 ## Sources reviewed
 
@@ -39,4 +42,4 @@ Real Supabase authentication, PostgREST permissions, invitation/email delivery, 
 
 ## Repository protection draft
 
-The root ignore rules exclude additional private template/master folders and backups. Ignore rules do not remove committed files or history. `python3 portal/tests/credential_guard.py` checks staged files and exits nonzero on recognised credential patterns or sensitive filenames; it never prints matched values. `--self-test` runs synthetic checks. This script is not yet enforced by GitHub push rules, CI or the owner's workstation. Provider secret scanning/push protection and account MFA require separate settings review. Do not treat this public development branch as private storage.
+The root ignore rules exclude additional private template/master folders and backups. Ignore rules do not remove committed files or history. `python3 portal/tests/credential_guard.py` checks staged files and exits nonzero on recognised credential patterns or sensitive filenames; it never prints matched values. `--self-test` runs synthetic checks. This script is not yet enforced by GitHub push rules, CI or the owner's workstation. Provider secret scanning/push protection still require settings review. Dashboard account MFA and a backup authenticator were confirmed separately; portal MFA remains a staging rollout task. Do not treat this public development branch as private storage.

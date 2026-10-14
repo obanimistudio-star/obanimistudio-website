@@ -5,5 +5,5 @@ export function safePreview(value) {
 export function validConfig(cfg) {
   if (!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(cfg.url || '') || !/^sb_publishable_[A-Za-z0-9_-]+$/.test(cfg.publishableKey || '')) return false;
   // An exact redirect prevents arbitrary callback URLs, including query-string redirects.
-  return cfg.redirectUrl === 'https://obanimistudio.com/portal/';
+  return ['https://obanimistudio.com/portal/', 'https://obanimistudio-staging.pages.dev/portal/'].includes(cfg.redirectUrl);
 }

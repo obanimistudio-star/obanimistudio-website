@@ -1,10 +1,12 @@
 // Browser roles control presentation only. Database grants, RLS and triggers authorize writes.
 import { validConfig, safePreview } from './validation.js';
+import { createMfaGate } from './mfa.js';
 const $ = id => document.getElementById(id);
 const node = (tag, value) => { const e = document.createElement(tag); if (value !== undefined) e.textContent = String(value); return e; };
 const notice = message => { $('notice').textContent = message; };
 const cfg = window.OBANIMI_PORTAL_CONFIG || {};
-const clearPrivate = () => { $('projects').replaceChildren(); $('admin').replaceChildren(); $('dashboard').hidden = true; };
+let mfa;
+const clearPrivate = () => { mfa?.clear(); $('projects').replaceChildren(); $('admin').replaceChildren(); $('dashboard').hidden = true; };
 if (!validConfig(cfg)) {
   notice('Setup pending. No client information is available.');
 } else {
@@ -20,6 +22,7 @@ if (!validConfig(cfg)) {
       }, storageKey: 'obanimi-portal-auth'
     }});
     let epoch = 0;
+    mfa = createMfaGate(db, { container: $('mfa'), notice, onVerified: () => refresh() });
     const field = (form, label, type = 'input', value = '') => {
       const wrap = node('label', label), input = node(type); input.value = value; wrap.append(input); form.append(wrap); return input;
     };
@@ -57,13 +60,15 @@ if (!validConfig(cfg)) {
       const auth = await db.auth.getUser(); if (!current()) return;
       const user = auth.error ? null : auth.data.user;
       $('login').hidden = !!user; $('logout').hidden = !user;
-      if (!user) { notice('Sign in using your invited email address.'); return; }
+      if (!user) { mfa.reset(); notice('Sign in using your invited email address.'); return; }
       // Remove callback parameters only after the SDK has verified the session.
       if (location.search || location.hash) history.replaceState(null, '', location.pathname);
       const member = await db.from('portal_members').select('role,display_name').eq('user_id', user.id).maybeSingle();
       if (!current()) return;
       if (member.error || !member.data) { notice('This account is not authorised. Contact ObanimiStudio.'); return; }
       const isAdmin = member.data.role === 'admin';
+      if (isAdmin && await mfa.required(user.id, current)) return;
+      if (!current()) return;
       const results = await Promise.all([
         db.from('client_projects').select('id,title,summary,status,progress,preview_url,revision,updated_at').order('updated_at', { ascending: false }),
         isAdmin ? db.from('portal_members').select('user_id,display_name,role').eq('role', 'client').order('display_name') : Promise.resolve({ data: [] }),
@@ -137,13 +142,14 @@ if (!validConfig(cfg)) {
     $('login-form').addEventListener('submit', async e => {
       e.preventDefault(); const button = e.currentTarget.querySelector('button'); button.disabled = true;
       try {
-        await db.auth.signInWithOtp({ email: $('email').value.trim(), options: { shouldCreateUser: false, emailRedirectTo: cfg.redirectUrl } });
+        const result = await db.auth.signInWithOtp({ email: $('email').value.trim(), options: { shouldCreateUser: false, emailRedirectTo: cfg.redirectUrl } });
+        if (result.error) throw result.error;
         notice('If this email is invited and delivery succeeds, a sign-in link will arrive shortly.');
       } catch { notice('Unable to request a sign-in link. Please try again.'); }
       finally { button.disabled = false; }
     });
     $('logout').addEventListener('click', async () => {
-      ++epoch; clearPrivate(); $('logout').disabled = true;
+      ++epoch; clearPrivate(); mfa.reset(); $('logout').disabled = true;
       try { const result = await db.auth.signOut({ scope: 'local' }); if (result.error) throw result.error; await refresh(); }
       catch { notice('Sign-out could not be confirmed. Close this tab and retry before leaving a shared device.'); }
       finally { $('logout').disabled = false; }

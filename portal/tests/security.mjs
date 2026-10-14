@@ -14,6 +14,8 @@ let checks=0;
 await db.exec(`create role anon; create role authenticated; create schema auth;
 create table auth.users(id uuid primary key);
 create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+create function auth.jwt() returns jsonb language sql stable as $$ select jsonb_build_object('aal',nullif(current_setting('request.jwt.claim.aal',true),'')) $$;
+grant execute on function auth.jwt() to authenticated;
 grant usage on schema auth to authenticated; grant execute on function auth.uid() to authenticated;
 -- Model Supabase's broad legacy default grants, including TRUNCATE.
 alter default privileges in schema public grant all on tables to anon,authenticated;
@@ -22,7 +24,7 @@ await db.exec(await readFile(new URL('../schema.sql', import.meta.url), 'utf8'))
 await db.exec(`insert into public.portal_members values('${admin}','admin','Admin'),('${alice}','client','Alice'),('${bob}','client','Bob');
 insert into public.client_projects(id,title,status) values('${project}','Alice project','review'),('${other}','Bob project','planning');
 insert into public.project_members values('${project}','${alice}'),('${other}','${bob}');`);
-async function asUser(id) { await db.exec(`reset role; select set_config('request.jwt.claim.sub','${id||''}',false); set role ${id ? 'authenticated' : 'anon'};`); }
+async function asUser(id, aal = id === admin ? 'aal2' : 'aal1') { await db.exec(`reset role; select set_config('request.jwt.claim.aal','${aal}',false); select set_config('request.jwt.claim.sub','${id||''}',false); set role ${id ? 'authenticated' : 'anon'};`); }
 async function denied(sql) { let rejected=false;try { await db.exec(sql); } catch { rejected=true; } assert.ok(rejected, 'Must deny: '+sql);checks++; }
 async function count(sql, n) { const result=await db.query(sql);assert.equal(result.rows.length,n);checks++; }
 await asUser(null);
@@ -70,5 +72,23 @@ await count('select * from public.project_feedback',0);
 await count('select * from public.project_approvals',0);
 await db.exec('reset role');
 assert.ok((await db.query('select * from private.portal_audit')).rows.length>=8);checks++;
+// Upgrading twice preserves existing data and policies.
+const migration = await readFile(new URL('../migrations/001_admin_mfa.sql', import.meta.url), 'utf8');
+await db.exec(migration); await db.exec(migration);
+await db.exec(`insert into public.project_members values('${project}','${admin}')`);
+await asUser(admin, 'aal1');
+await count('select * from public.portal_members',1);
+for (const table of ['client_projects','project_members','project_feedback','project_approvals']) await count(`select * from public.${table}`,0);
+await denied(`insert into public.client_projects(title) values('Blocked')`);
+await denied(`insert into public.portal_members values('00000000-0000-0000-0000-000000000099','client','Blocked')`);
+await denied(`insert into public.project_members values('${other}','${admin}')`);
+await denied(`insert into public.project_feedback(project_id,author_id,message) values('${project}','${admin}','Blocked')`);
+await denied(`insert into public.project_approvals(project_id,author_id,revision,decision) values('${project}','${admin}',2,'approved')`);
+await count(`update public.client_projects set title='Blocked' returning id`,0);
+await count(`update public.portal_members set display_name='Blocked' returning user_id`,0);
+await count(`delete from public.project_members returning user_id`,0);
+await asUser(admin, ''); await count('select * from public.client_projects',0);
+await asUser(admin); await count('select * from public.client_projects',2);
+await asUser(bob); await count('select * from public.client_projects',1);
 await db.close();
 console.log(`${checks} disposable database security checks passed. No Supabase connection used.`);
