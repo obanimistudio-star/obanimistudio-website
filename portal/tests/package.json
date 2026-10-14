@@ -1,0 +1,14 @@
+{
+  "name": "obanimistudio-portal-tests",
+  "private": true,
+  "scripts": {
+    "security": "node security.mjs",
+    "browser": "node browser.cjs",
+    "concurrency": "node concurrency.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.3.14",
+    "pg": "8.23.1",
+    "playwright": "1.64.1"
+  }
+}

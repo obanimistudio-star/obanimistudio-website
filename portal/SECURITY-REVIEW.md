@@ -22,7 +22,7 @@ Public business contact addresses occur in current site files; the scan did not 
 
 ## Open release work
 
-Authenticated HTTP isolation/write tests, concurrent edit/approval behavior, expiry, immutable review artifacts, privacy/retention/offboarding decisions, full-history credential assessment and private asset migration. Administrator MFA and project-specific CSP have been implemented; hosted policy verification remains a separate check. No guarantee of complete privacy or production readiness is made.
+Authenticated HTTP isolation/write tests, concurrent edit/approval behavior, expiry, immutable review artifacts, privacy/retention/offboarding decisions, full-history credential assessment and private asset migration. Administrator MFA and project-specific CSP have been implemented; the owner also passed the 19 hosted role/assurance checks. No guarantee of complete privacy or production readiness is made.
 
 ## Validation completed for this draft
 
@@ -30,4 +30,9 @@ Authenticated HTTP isolation/write tests, concurrent edit/approval behavior, exp
 
 ## Staging follow-up — 14 October 2026
 
-Owner screenshots and confirmation show UI deployment, portal administrator TOTP enrollment, successful migration execution, a fresh MFA sign-in, and an unassigned-client empty view after the upgrade. Five signed-out REST reads were denied with HTTP 401 / code 42501. Automated Pages asset downloads were blocked with HTTP 403. Hosted authenticated HTTP writes, guessed-ID tests, concurrency, expiry and private asset protection remain unresolved. A rollback-only SQL role/assurance check is supplied in tests/hosted-access.sql; it has not been run against the hosted database by this agent.
+Owner screenshots and confirmation show UI deployment, portal administrator TOTP enrollment, successful migration execution, a fresh MFA sign-in, and an unassigned-client empty view after the upgrade. Five signed-out REST reads were denied with HTTP 401 / code 42501. Automated Pages asset downloads were blocked with HTTP 403. Hosted authenticated HTTP writes, guessed-ID tests, concurrency, expiry and private asset protection remain unresolved. The owner subsequently ran tests/hosted-access.sql; the 18:56 screenshot reports all 19 database checks passed and temporary setup rolled back. These simulated roles/claims do not certify actual authenticated HTTP requests.
+
+
+## Additional regression coverage
+
+Browser regression coverage now includes rejected stale saves (including the revision filter), and session-expiry events while activity loads are pending. A separate concurrency suite uses independent native PostgreSQL sessions and verifies lock waits before releasing competing transactions. A pull-request workflow provides a disposable local PostgreSQL 17 instance. The workflow outcome is pending until an actual completed run is recorded; adding a test is not evidence that it passed.

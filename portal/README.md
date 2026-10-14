@@ -42,7 +42,7 @@ Administrator MFA enforcement fails closed in the database, including direct API
 
 ## Repository protection draft
 
-The root ignore rules exclude additional private template/master folders and backups. Ignore rules do not remove committed files or history. `python3 portal/tests/credential_guard.py` checks staged files and exits nonzero on recognised credential patterns or sensitive filenames; it never prints matched values. `--self-test` runs synthetic checks. This script is not yet enforced by GitHub push rules, CI or the owner's workstation. Provider secret scanning/push protection still require settings review. Dashboard account MFA and a backup authenticator were confirmed separately; portal MFA remains a staging rollout task. Do not treat this public development branch as private storage.
+The root ignore rules exclude additional private template/master folders and backups. Ignore rules do not remove committed files or history. `python3 portal/tests/credential_guard.py` checks staged files and exits nonzero on recognised credential patterns or sensitive filenames; it never prints matched values. `--self-test` runs synthetic checks. This script is not yet enforced by GitHub push rules, CI or the owner's workstation. Provider secret scanning/push protection still require settings review. Dashboard account MFA and a backup authenticator were confirmed separately; portal MFA was enrolled and its migration applied on staging. Do not treat this public development branch as private storage.
 
 ## Staging verification — 14 October 2026
 
@@ -50,4 +50,13 @@ The owner deployed the MFA ZIP to the staging Pages project, enrolled the portal
 
 A subsequent signed-out REST check returned HTTP 401 / PostgreSQL 42501 for each of the five portal tables. Automated staging asset downloads returned HTTP 403, so exact deployed-byte comparison remains unverified.
 
-`tests/hosted-access.sql` is ready for the owner to run as postgres in the existing project's SQL Editor. It produces 19 PASS/FAIL results using simulated authenticated roles and assurance claims, then rolls back all temporary objects/settings. It does not change projects/accounts, mint real tokens, or replace authenticated HTTP and concurrency checks. Missing test prerequisites deliberately fail rather than passing vacuously.
+`tests/hosted-access.sql` was run by the owner in the hosted SQL Editor. The 18:56 screenshot reports: “PASS: all 19 database checks passed; temporary setup rolled back”. These checks use simulated authenticated roles and assurance claims. It does not change projects/accounts, mint real tokens, or replace authenticated HTTP and concurrency checks. Missing test prerequisites deliberately fail rather than passing vacuously.
+
+
+## Repeatable isolated test run
+
+Run `npm ci --ignore-scripts` in `portal/tests`, followed by `npm run security` and `npm run browser` (install Chromium with `npx playwright install chromium` first). `npm run concurrency` additionally needs a disposable PostgreSQL instance on 127.0.0.1:5432, with the local postgres user allowed to create a test database. An alternate local port can be specified with PORTAL_TEST_PGPORT. No remote database URL is accepted. Never configure this suite with real accounts or hosted credentials.
+
+`tests/concurrency.mjs` uses three separate PostgreSQL connections and waits for a database lock to prove operations overlap. It checks competing revision-filtered saves, stale approval after an edit, approval before an edit, duplicate decisions and independent reviewers. It creates and drops a synthetic test database. It is not a hosted Supabase concurrency test.
+
+The Portal checks pull-request workflow runs the database, concurrency and mocked browser suites against an isolated PostgreSQL 17 service with read-only repository permissions. It receives no hosted secrets and performs no deployment. Its result must be inspected before marking concurrency validated.
