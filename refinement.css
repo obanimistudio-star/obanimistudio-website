@@ -77,3 +77,8 @@ html[data-theme="bright"] .hero-logo{box-shadow:0 24px 65px rgba(62,42,9,.24),0 
 .case-facts{margin:18px 0;padding:14px 18px;border-left:3px solid #bd913e;background:rgba(164,128,50,.09);border-radius:0 10px 10px 0}.case-facts p{margin:8px 0;font-size:.94em;line-height:1.6}.case-facts strong{color:inherit}
 html[data-theme="bright"] .hero-particles i{background:#9c6514;opacity:.32}
 @media(prefers-reduced-motion:reduce){.hero-particles i{animation:none!important}.awaiting-reveal{opacity:1!important;translate:none!important}}
+
+/* Allow the quieter footer navigation to wrap comfortably on tablets. */
+footer{flex-wrap:wrap;gap:24px}.footer-links{flex-wrap:wrap;justify-content:center;gap:16px}
+
+@media(min-width:1281px){.site-header{gap:28px}.nav{gap:22px;font-size:14px}.nav a{white-space:nowrap}.brand{flex-shrink:0}}
