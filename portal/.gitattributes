@@ -1,0 +1,2 @@
+# Preserve intentional template-literal whitespace in the generated SDK.
+vendor/supabase.js -whitespace

@@ -1,0 +1,49 @@
+name: Portal checks
+on:
+  pull_request:
+    paths:
+      - 'portal/**'
+      - '.github/workflows/portal-checks.yml'
+permissions:
+  contents: read
+concurrency:
+  group: portal-checks-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  isolated-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          # Disposable runner only. No hosted credentials or data are used.
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: portal/tests
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: npm run security
+      - run: npm run reviews
+      - run: node config.mjs
+      - run: node storage-fetch.mjs
+      - run: npm run concurrency
+      - run: npm run browser
+      - run: python3 credential_guard.py --self-test
+      - run: python3 credential_guard.py --tracked
+      - run: git diff --check
