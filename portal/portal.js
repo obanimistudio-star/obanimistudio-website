@@ -113,7 +113,17 @@ if (window.self !== window.top) {
         if (feedback.error || approvals.error) activity.append(node('p', 'Activity could not be loaded.'));
         else {
           for (const item of feedback.data) activity.append(node('p', `Feedback · ${item.message}`));
-          for (const item of approvals.data) activity.append(node('p',…301 tokens truncated…cision === 'changes_requested' && !note.trim())) return;
+          for (const item of approvals.data) activity.append(node('p', `Version ${item.revision}${item.revision !== project.revision ? ' (previous)' : ''} · ${item.decision.replaceAll('_', ' ')} · ${item.note}`));
+        }
+        const form = node('form'), input = field(form, 'Feedback', 'textarea'); input.required = true; input.maxLength = 3000;
+        const send = node('button', 'Send feedback'); form.append(send); card.append(form);
+        form.addEventListener('submit', e => { e.preventDefault(); const message = input.value.trim(); if (message) run(send, () => db.from('project_feedback').insert({ project_id: project.id, author_id: user.id, message }), 'Feedback saved.'); });
+        if (!isAdmin && project.status === 'review') {
+          for (const [decision, label] of [['approved', 'Approve this version'], ['changes_requested', 'Request changes']]) {
+            const button = node('button', label); button.type = 'button'; card.append(button);
+            button.addEventListener('click', () => {
+              const note = window.prompt(decision === 'approved' ? `Confirm approval of version ${project.revision}. Optional note:` : 'Describe the changes requested');
+              if (note === null || note.length > 3000 || (decision === 'changes_requested' && !note.trim())) return;
               run(button, () => db.from('project_approvals').insert({ project_id: project.id, author_id: user.id, revision: project.revision, decision, note: note.trim() }), 'Decision recorded.');
             });
           }
