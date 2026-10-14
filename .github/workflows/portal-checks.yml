@@ -42,4 +42,5 @@ jobs:
       - run: npm run concurrency
       - run: npm run browser
       - run: python3 credential_guard.py --self-test
+      - run: python3 credential_guard.py --tracked
       - run: git diff --check

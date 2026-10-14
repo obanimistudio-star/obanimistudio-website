@@ -42,7 +42,7 @@ Administrator MFA enforcement fails closed in the database, including direct API
 
 ## Repository protection draft
 
-The root ignore rules exclude additional private template/master folders and backups. Ignore rules do not remove committed files or history. `python3 portal/tests/credential_guard.py` checks staged files and exits nonzero on recognised credential patterns or sensitive filenames; it never prints matched values. `--self-test` runs synthetic checks. This script is not yet enforced by GitHub push rules, CI or the owner's workstation. Provider secret scanning/push protection still require settings review. Dashboard account MFA and a backup authenticator were confirmed separately; portal MFA was enrolled and its migration applied on staging. Do not treat this public development branch as private storage.
+The root ignore rules exclude additional private template/master folders and backups. Ignore rules do not remove committed files or history. `python3 portal/tests/credential_guard.py` checks staged files and exits nonzero on recognised credential patterns or sensitive filenames; it never prints matched values. `--self-test` runs synthetic checks. The portal pull-request workflow now scans every tracked index file with this guard in addition to its synthetic tests. GitHub push rules and workstation enforcement are not configured. Provider secret scanning/push protection still require settings review. Dashboard account MFA and a backup authenticator were confirmed separately; portal MFA was enrolled and its migration applied on staging. Do not treat this public development branch as private storage.
 
 ## Staging verification — 14 October 2026
 
@@ -60,3 +60,18 @@ Run `npm ci --ignore-scripts` in `portal/tests`, followed by `npm run security` 
 `tests/concurrency.mjs` uses three separate PostgreSQL connections and waits for a database lock to prove operations overlap. It checks competing revision-filtered saves, stale approval after an edit, approval before an edit, duplicate decisions and independent reviewers. It creates and drops a synthetic test database. It is not a hosted Supabase concurrency test.
 
 The Portal checks pull-request workflow runs the database, concurrency and mocked browser suites against an isolated PostgreSQL 17 service with read-only repository permissions. It receives no hosted secrets and performs no deployment. Run 38612968561 completed successfully on 14 October 2026 at commit f701e65: 50 database security checks, all five real concurrent transaction scenarios, browser regressions and credential-guard self-tests passed. Evidence: https://github.com/obanimistudio-star/obanimistudio-website/actions/runs/38612968561. This validates the isolated schema and UI code, not hosted authenticated HTTP requests.
+
+
+## Owner-completed live tests — 14 October 2026, 19:20–19:37 BST
+
+The owner supplied screenshots and confirmed these deployed staging flows after the MFA upgrade:
+
+- Administrator changed the Client 2 Isolation Test from 0% / revision 1 to 10% / revision 2; it remained at 10% after refresh.
+- Administrator granted Test Client 2 access; the control changed to Remove access.
+- Test Client 2 loaded the assigned project at 10% / revision 2 with the client interface.
+- Test Client 2 submitted new feedback, visible in the project activity.
+- Administrator removed the assignment; refreshing the client session returned No projects assigned yet.
+
+These are successful real-session UI workflows, which use the hosted API. They do not prove arbitrary forged/guessed-ID requests are denied. No further owner screenshot requests are pending. The final test state leaves Test Client 2 unassigned and preserves its test feedback; the test project remains at 10% / revision 2.
+
+The portal remains on staging and PR #41 remains draft. Main-domain publishing, merge, private-preview migration and any paid upgrade have not been performed. Actual hosted denied-request testing needs an authenticated test session accessible to the test runner; the owner's tablet login cannot supply that here. Do not transfer tokens or credentials through chat. Public preview files remain public, and no private source/template protection is claimed.

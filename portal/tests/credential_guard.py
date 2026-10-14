@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Local staged-file check. Reports paths/categories, never credential values.
+"""Index credential check. Reports paths/categories, never credential values.
 Run from a repository: python3 portal/tests/credential_guard.py
+Scan every tracked index file (for CI): add --tracked
 Run its synthetic tests: python3 portal/tests/credential_guard.py --self-test
 This complements provider secret scanning; it cannot certify absence of secrets.
 """
@@ -52,7 +53,9 @@ def self_test():
 
 if __name__=='__main__':
     if '--self-test' in sys.argv:self_test();sys.exit(0)
-    paths=subprocess.check_output(['git','diff','--cached','--name-only','--diff-filter=ACMR','-z']).decode().split('\0')
+    tracked='--tracked' in sys.argv
+    command=['git','ls-files','-z'] if tracked else ['git','diff','--cached','--name-only','--diff-filter=ACMR','-z']
+    paths=subprocess.check_output(command).decode().split('\0')
     blocked=False
     for path in filter(None,paths):
         data=subprocess.check_output(['git','show',':'+path])
@@ -61,4 +64,4 @@ if __name__=='__main__':
     if blocked:
         print('Commit blocked. Remove the sensitive file/value; privately review whether an exposed credential needs rotation.',file=sys.stderr)
         sys.exit(1)
-    print('Staged credential-pattern check passed (not a complete security audit).')
+    print(('Tracked index' if tracked else 'Staged')+' credential-pattern check passed (not a complete security audit).')
