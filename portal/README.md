@@ -101,3 +101,14 @@ Subsequent Supabase commands, including read-only verification, failed with the 
 No temporary test accounts/projects were created. The planned isolated HTTP test function did not receive a successful deployment response and was never invoked. Real authenticated HTTP negative/Storage tests and callback allowlist checks remain pending. The new UI is not deployed to staging or production. Publication is authorised after verification; do not merge while these hosted checks are blocked.
 
 Security advisor before the upgrade reported intentional default-deny RLS on private.portal_audit (informational) and disabled leaked-password protection (warning). No plan upgrade or auth-setting change was made. Portal users sign in via invited email links; dashboard MFA remains separate. Re-run advisors after verification; do not claim all advisor findings are resolved.
+
+
+## Hosted HTTP verification after reconnection — 14 October 2026
+
+Reconnection restored the Supabase tools. Migration 20261014192308, private bucket settings, all six Storage policies and the access function were verified. A temporary Edge Function used a one-time custom secret, strict expiry and genuine disposable Auth accounts; no owner tokens or service-role keys were exposed. Final run: **49 of 50 live checks passed**. The sole failure is the main-domain Auth callback, which is not allowlisted. Staging callback passed. See tests/evidence/hosted-http-2026-10-14.json. Do not publish until the main callback is added and independently rechecked.
+
+Live checks cover real AAL1/AAL2 sessions, guessed IDs, client isolation, forbidden role and assignment writes, feedback authorship, immutable/version-bound approvals, stale saves, private upload/download, public URL denial and access revocation. A cached response was initially available to the previously authorised token after revocation. The portal now wraps its dedicated private Storage download requests with a unique query and cache:no-store; a repeat real SDK download after revocation was denied. Already downloaded/cached copies cannot be recalled. Storage objects remain private and use cacheControl:0 at upload.
+
+The temporary endpoint was replaced with a JWT-required 410 stub. Independent SQL confirmed zero synthetic Auth users, projects and private review objects remain; a sign-out warning for an old test token did not prevent deletion. Private audit events are retained. Actual JWT lifetimes were bounded to one hour; elapsed-time expiry is not claimed. Existing manual UI evidence and isolated native concurrency checks remain applicable.
+
+Owner dashboard action needed: Authentication > URL Configuration > Redirect URLs, add exactly https://obanimistudio.com/portal/ and retain https://obanimistudio-staging.pages.dev/portal/. The connector has no Auth configuration update operation. No plan changes, production deployment or changes to existing client projects were made.

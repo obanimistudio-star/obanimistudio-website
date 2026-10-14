@@ -1,0 +1,227 @@
+{
+  "checks": [
+    {
+      "name": "admin: bounded JWT lifetime",
+      "pass": true
+    },
+    {
+      "name": "client-a: bounded JWT lifetime",
+      "pass": true
+    },
+    {
+      "name": "client-b: bounded JWT lifetime",
+      "pass": true
+    },
+    {
+      "name": "outsider: bounded JWT lifetime",
+      "pass": true
+    },
+    {
+      "name": "Anonymous denied portal_members",
+      "pass": true
+    },
+    {
+      "name": "Anonymous denied client_projects",
+      "pass": true
+    },
+    {
+      "name": "Anonymous denied project_members",
+      "pass": true
+    },
+    {
+      "name": "Anonymous denied project_feedback",
+      "pass": true
+    },
+    {
+      "name": "Anonymous denied project_approvals",
+      "pass": true
+    },
+    {
+      "name": "Assigned administrator without MFA cannot read",
+      "pass": true
+    },
+    {
+      "name": "Administrator without MFA cannot update",
+      "pass": true
+    },
+    {
+      "name": "Administrator without MFA cannot upload",
+      "pass": true
+    },
+    {
+      "name": "MFA administrator reads both synthetic projects",
+      "pass": true
+    },
+    {
+      "name": "Client A reads assigned project only",
+      "pass": true
+    },
+    {
+      "name": "Guessed other-client project ID returns no rows",
+      "pass": true
+    },
+    {
+      "name": "Unregistered user reads no projects",
+      "pass": true
+    },
+    {
+      "name": "Browser role promotion denied",
+      "pass": true
+    },
+    {
+      "name": "Client self-assignment denied",
+      "pass": true
+    },
+    {
+      "name": "Client cannot edit project",
+      "pass": true
+    },
+    {
+      "name": "Cross-client feedback insert denied",
+      "pass": true
+    },
+    {
+      "name": "Forged feedback author denied",
+      "pass": true
+    },
+    {
+      "name": "Assigned client feedback succeeds",
+      "pass": true
+    },
+    {
+      "name": "Other client cannot read feedback",
+      "pass": true
+    },
+    {
+      "name": "MFA administrator private upload succeeds",
+      "pass": true
+    },
+    {
+      "name": "Assigned client downloads private file",
+      "pass": true
+    },
+    {
+      "name": "Other client download denied",
+      "pass": true
+    },
+    {
+      "name": "Administrator without MFA download denied",
+      "pass": true
+    },
+    {
+      "name": "Anonymous private download denied",
+      "pass": true
+    },
+    {
+      "name": "Public storage URL denied",
+      "pass": true
+    },
+    {
+      "name": "Client private upload denied",
+      "pass": true
+    },
+    {
+      "name": "Private file overwrite denied",
+      "pass": true
+    },
+    {
+      "name": "Browser removal leaves immutable file intact",
+      "pass": true
+    },
+    {
+      "name": "Cross-client approval denied",
+      "pass": true
+    },
+    {
+      "name": "Assigned client approval succeeds",
+      "pass": true
+    },
+    {
+      "name": "Duplicate approval denied",
+      "pass": true
+    },
+    {
+      "name": "Approval mutation denied",
+      "pass": true
+    },
+    {
+      "name": "Upload after approval frozen",
+      "pass": true
+    },
+    {
+      "name": "Administrator update increments version",
+      "pass": true
+    },
+    {
+      "name": "Stale administrator update affects no rows",
+      "pass": true
+    },
+    {
+      "name": "Stale approval denied",
+      "pass": true
+    },
+    {
+      "name": "Stale version upload denied",
+      "pass": true
+    },
+    {
+      "name": "New version accepts fresh private file",
+      "pass": true
+    },
+    {
+      "name": "Allowed sign-in callback obanimistudio.com",
+      "pass": false
+    },
+    {
+      "name": "Allowed sign-in callback obanimistudio-staging.pages.dev",
+      "pass": true
+    },
+    {
+      "name": "Invalid bearer token rejected",
+      "pass": true
+    },
+    {
+      "name": "Revoked client cannot read project",
+      "pass": true
+    },
+    {
+      "name": "Revoked client cannot read feedback",
+      "pass": true
+    },
+    {
+      "name": "Revoked client cannot download file",
+      "pass": true
+    },
+    {
+      "name": "Revoked client fresh download denied",
+      "pass": true
+    },
+    {
+      "name": "Revoked client fresh download status",
+      "pass": true
+    }
+  ],
+  "total": 50,
+  "passed": 49,
+  "cleanupFailures": [
+    "signout"
+  ],
+  "date": "2026-10-14",
+  "transport": "Real hosted Auth, PostgREST and Storage HTTP calls from a temporary custom-key-authenticated Edge Function",
+  "syntheticOnly": true,
+  "functionVersionTested": 7,
+  "functionBundleSha256": "de8eeee8ed26be12e8a33555460b1645331ba0095734f1057d2d7e606d776f4a",
+  "cleanupVerifiedByOwnerSQL": {
+    "syntheticAuthUsers": 0,
+    "syntheticProjects": 0,
+    "privateReviewObjects": 0
+  },
+  "cleanupNote": "Sign-out returned one warning for a superseded test token. Independent SQL confirmed every synthetic Auth user, project and Storage object was removed. Private operational audit records remain.",
+  "retirement": "Function replaced with a JWT-required 410 stub after execution.",
+  "limitations": [
+    "Main callback is not yet allowlisted.",
+    "Expiry checks assert real token lifetime <= one hour; they do not wait for token expiry.",
+    "Previously downloaded/cached copies cannot be recalled. Portal fetches now use a unique query per download and cache:no-store.",
+    "Updated UI is not deployed to staging or main yet."
+  ]
+}

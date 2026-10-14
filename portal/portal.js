@@ -2,6 +2,7 @@
 import { validConfig, safePreview } from './validation.js';
 import { createMfaGate } from './mfa.js';
 import { createReviewFiles } from './reviews.js';
+import { createPrivateStorageFetch } from './storage-fetch.js';
 const $ = id => document.getElementById(id);
 const node = (tag, value) => { const e = document.createElement(tag); if (value !== undefined) e.textContent = String(value); return e; };
 const notice = message => { $('notice').textContent = message; };
@@ -14,7 +15,9 @@ if (window.self !== window.top) {
   notice('Setup pending. No client information is available.');
 } else {
   import('./vendor/supabase.js').then(async ({ createClient }) => {
-    const db = createClient(cfg.url, cfg.publishableKey, { auth: {
+    const db = createClient(cfg.url, cfg.publishableKey, { global: {
+      fetch: createPrivateStorageFetch(cfg.url)
+    }, auth: {
       flowType: 'pkce', detectSessionInUrl: true, persistSession: true,
       // Tokens stay per-tab. Only the one-time PKCE verifier is shared so
       // an email link opened in another tab can complete authentication.
