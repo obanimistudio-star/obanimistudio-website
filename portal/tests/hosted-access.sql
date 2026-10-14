@@ -69,4 +69,11 @@ insert into portal_check_results select 'Unassigned client: no approvals',count(
 reset role;
 select check_name,case when passed then 'PASS' else 'FAIL' end as result
 from portal_check_results order by passed,check_name;
+do $$ declare failed text; total integer; begin
+ select string_agg(check_name, '; ') filter (where passed is not true),count(*) into failed,total from portal_check_results;
+ if total<>19 or failed is not null then
+  raise exception 'Security checks failed (% total): %',total,coalesce(failed,'unexpected check count');
+ end if;
+end $$;
 rollback;
+select 'PASS: all 19 database checks passed; temporary setup rolled back' as result;
