@@ -50,3 +50,16 @@ The portal CI workflow also scans all tracked index files for recognised credent
 The new review module uses a private Storage bucket and authenticated downloads, with per-project/revision paths, administrator MFA, client assignment checks, immutable objects and closed uploads after the first decision. Uploads lock the project row to serialize against decisions and edits. A disposable Storage/RLS model includes deliberately broad legacy policies to test the restrictive boundaries. Native concurrency coverage adds upload/approval/edit races. Hosted Storage behavior is still unverified until migration 002 is applied and real HTTP checks pass.
 
 The root service worker bypasses portal/Supabase requests; main/staging callbacks are origin-specific and unknown origins fail closed. Cloudflare-only header rules are supplied; these are not applied by GitHub Pages. Framed portal UI is blocked before Auth starts. These changes are prepared in the draft and are not a production deployment. Public preview sources remain public; protected PDF/image delivery does not retroactively privatise them.
+
+
+## Hosted upgrade state — 14 October 2026
+
+Private-review code at commit 4bf36cc passed GitHub workflow 38622873949: 50 database security checks, 24 private Storage policy checks, eight native concurrent transaction scenarios, callback checks, browser regressions and tracked credential-pattern checks.
+
+The owner connected Supabase. The project was confirmed as ObanimiStudio / vteihksnoxuiadhsodzv, healthy on PostgreSQL 17 and the Free plan. Existing portal MFA policies and Storage RLS were inspected; no Storage buckets existed. Migration `portal_private_review_files`, using 002_private_reviews.sql, returned success through Supabase apply_migration. This creates the private bucket and policies only; it does not deploy UI or change existing project records.
+
+Subsequent Supabase commands, including read-only verification, failed with the connector error `This app tool requires a non-empty string link_id argument`. This is a connector failure, not proof of a database failure or missing user approval. Do not reapply the migration blindly: inspect the bucket, policies and migration history once the connection resumes.
+
+No temporary test accounts/projects were created. The planned isolated HTTP test function did not receive a successful deployment response and was never invoked. Real authenticated HTTP negative/Storage tests and callback allowlist checks remain pending. The new UI is not deployed to staging or production. Publication is authorised after verification; do not merge while these hosted checks are blocked.
+
+Security advisor before the upgrade reported intentional default-deny RLS on private.portal_audit (informational) and disabled leaked-password protection (warning). No plan upgrade or auth-setting change was made. Portal users sign in via invited email links; dashboard MFA remains separate. Re-run advisors after verification; do not claim all advisor findings are resolved.

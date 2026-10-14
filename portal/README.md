@@ -88,3 +88,16 @@ Review files provide confidential PDF/image review, not private hosting for inte
 Production preparation: callback config now selects only the exact main or staging callback for its current origin; unknown origins fail setup. Both exact callbacks must be verified in Supabase Auth before publishing. The existing public-site service worker bypasses portal and Supabase requests. Cloudflare `_headers` rules apply only to /portal/*; GitHub Pages ignores this file, so main-site response-header protection requires hosting configuration. The portal also blocks its UI/authentication when framed.
 
 Release remains blocked until the connected Supabase commands are callable, 002 is applied to the intended project, private Storage upload/download/revocation and actual hosted denied requests are verified, and the main callback is confirmed. The owner has authorised publication once the checks pass. Do not merge or publish the unverified upgrade.
+
+
+## Hosted upgrade state — 14 October 2026
+
+Private-review code at commit 4bf36cc passed GitHub workflow 38622873949: 50 database security checks, 24 private Storage policy checks, eight native concurrent transaction scenarios, callback checks, browser regressions and tracked credential-pattern checks.
+
+The owner connected Supabase. The project was confirmed as ObanimiStudio / vteihksnoxuiadhsodzv, healthy on PostgreSQL 17 and the Free plan. Existing portal MFA policies and Storage RLS were inspected; no Storage buckets existed. Migration `portal_private_review_files`, using 002_private_reviews.sql, returned success through Supabase apply_migration. This creates the private bucket and policies only; it does not deploy UI or change existing project records.
+
+Subsequent Supabase commands, including read-only verification, failed with the connector error `This app tool requires a non-empty string link_id argument`. This is a connector failure, not proof of a database failure or missing user approval. Do not reapply the migration blindly: inspect the bucket, policies and migration history once the connection resumes.
+
+No temporary test accounts/projects were created. The planned isolated HTTP test function did not receive a successful deployment response and was never invoked. Real authenticated HTTP negative/Storage tests and callback allowlist checks remain pending. The new UI is not deployed to staging or production. Publication is authorised after verification; do not merge while these hosted checks are blocked.
+
+Security advisor before the upgrade reported intentional default-deny RLS on private.portal_audit (informational) and disabled leaked-password protection (warning). No plan upgrade or auth-setting change was made. Portal users sign in via invited email links; dashboard MFA remains separate. Re-run advisors after verification; do not claim all advisor findings are resolved.
