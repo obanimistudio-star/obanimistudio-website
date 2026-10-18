@@ -94,3 +94,6 @@ footer{flex-wrap:wrap;gap:24px}.footer-links{flex-wrap:wrap;justify-content:cent
 html[data-theme="bright"] .showcase-section,html[data-theme="bright"] .faq-section{background:#fffaf1;color:#242019}html[data-theme="bright"] .showcase-copy p,html[data-theme="bright"] .faq-list details p,html[data-theme="bright"] .process-note{color:#514b40}html[data-theme="bright"] .showcase-copy .eyebrow{color:#8c6113}
 html[data-theme="cool"] .showcase-section,html[data-theme="cool"] .faq-section{background:linear-gradient(145deg,#082433,#104054);color:#f0f8fb}
 @media(max-width:860px){.showcase-layout{gap:32px;grid-template-columns:1fr}.showcase-layout video{max-width:310px;justify-self:center}.showcase-copy{max-width:620px}.faq-list{margin:0}.enquiry-actions{width:100%}}
+
+/* Values are descriptive content, not interactive controls. */
+.studio-values{margin:32px 0 0;display:grid;gap:22px}.studio-values>div{padding:0;border:0;background:none}.studio-values dt{font-weight:800;color:var(--gold2);font-size:17px}.studio-values dd{margin:5px 0 0;font-size:16px;line-height:1.65;color:var(--muted)}html[data-theme="bright"] .studio-values dd{color:#514b40}
