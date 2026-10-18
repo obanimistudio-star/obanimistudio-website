@@ -82,3 +82,18 @@ html[data-theme="bright"] .hero-particles i{background:#9c6514;opacity:.32}
 footer{flex-wrap:wrap;gap:24px}.footer-links{flex-wrap:wrap;justify-content:center;gap:16px}
 
 @media(min-width:1281px){.site-header{gap:28px}.nav{gap:22px;font-size:14px}.nav a{white-space:nowrap}.brand{flex-shrink:0}}
+
+/* Project confidence, optional showcase and answers: October 2026. */
+.process-note{margin:26px 0 0;color:var(--muted);max-width:780px;font-size:15px}
+.showcase-section,.faq-section{border-top:1px solid var(--line)}
+.showcase-layout{display:grid;grid-template-columns:minmax(200px,330px) 1fr;gap:64px;align-items:center}
+.showcase-layout video{display:block;width:100%;height:auto;max-height:590px;aspect-ratio:9/16;background:#070809;border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 55px rgba(0,0,0,.2)}
+.showcase-copy h3{font-size:clamp(28px,3.5vw,42px);line-height:1.15;margin:12px 0 24px}.showcase-copy p{color:var(--muted)}.showcase-copy .eyebrow{color:var(--gold2)}
+.faq-list{max-width:900px;margin-left:auto}.faq-list details{border-bottom:1px solid var(--line);padding:0 4px}.faq-list summary{cursor:pointer;font-weight:750;padding:23px 6px;line-height:1.5}.faq-list details p{margin:0 6px 25px;color:var(--muted);max-width:780px}.faq-list a{text-decoration:underline;text-underline-offset:3px}.faq-list summary:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+.enquiry-actions{display:flex;gap:12px;flex-wrap:wrap}.enquiry-actions .button{cursor:pointer}.enquiry-actions .secondary{border:1px solid var(--line);color:var(--cream)}#enquiry-status:empty{display:none}#enquiry-status{margin:0;font-size:15px}
+html[data-theme="bright"] .showcase-section,html[data-theme="bright"] .faq-section{background:#fffaf1;color:#242019}html[data-theme="bright"] .showcase-copy p,html[data-theme="bright"] .faq-list details p,html[data-theme="bright"] .process-note{color:#514b40}html[data-theme="bright"] .showcase-copy .eyebrow{color:#8c6113}
+html[data-theme="cool"] .showcase-section,html[data-theme="cool"] .faq-section{background:linear-gradient(145deg,#082433,#104054);color:#f0f8fb}
+@media(max-width:860px){.showcase-layout{gap:32px;grid-template-columns:1fr}.showcase-layout video{max-width:310px;justify-self:center}.showcase-copy{max-width:620px}.faq-list{margin:0}.enquiry-actions{width:100%}}
+
+/* Values are descriptive content, not interactive controls. */
+.studio-values{margin:32px 0 0;display:grid;gap:22px}.studio-values>div{padding:0;border:0;background:none}.studio-values dt{font-weight:800;color:var(--gold2);font-size:17px}.studio-values dd{margin:5px 0 0;font-size:16px;line-height:1.65;color:var(--muted)}html[data-theme="bright"] .studio-values dd{color:#514b40}

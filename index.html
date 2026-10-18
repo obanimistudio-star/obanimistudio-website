@@ -45,7 +45,7 @@
       <a href="/products/">Our Products</a>
       <a href="#about">About</a>
       <div class="appearance-control"><label for="appearance-theme">Appearance</label><select id="appearance-theme" aria-label="Choose website appearance"><option value="dark">Dark</option><option value="bright">Bright</option><option value="cool">Cool</option></select></div>
-      <a class="nav-cta" href="mailto:obanimistudio@gmail.com?subject=Request%20a%20Quote%20%E2%80%94%20ObanimiStudio">Request a Quote</a>
+      <a class="nav-cta" href="#enquiry">Request a Quote</a>
     </nav>
   </header>
 
@@ -92,23 +92,25 @@
         <select id="enquiry-type" required><option value="">Select a service</option><option>Website design &amp; launch</option><option>Digital product or app</option><option>Branding, flyers &amp; graphics</option><option>Website maintenance &amp; support</option><option>Other creative project</option></select>
         <label for="enquiry-budget">Indicative budget</label>
         <select id="enquiry-budget"><option>Not sure yet</option><option>Under £350</option><option>£350–£749</option><option>£750–£1,199</option><option>£1,200+</option></select>
+        <label for="enquiry-launch">Preferred launch</label>
+        <select id="enquiry-launch"><option>Flexible / not sure yet</option><option>Within one month</option><option>Within 1–3 months</option><option>More than three months away</option></select>
         <label for="enquiry-details">Project details</label>
-        <textarea id="enquiry-details" rows="5" maxlength="2500" required placeholder="What do you need, and when would you like to launch?"></textarea>
-        <button class="button primary" type="submit">Prepare email enquiry ↗</button>
+        <textarea id="enquiry-details" rows="5" maxlength="2500" required placeholder="Tell us about your business or organisation, who the project is for, and what you want it to achieve."></textarea>
+        <div class="enquiry-actions"><button class="button primary" type="submit">Prepare email enquiry ↗</button><button class="button secondary" type="button" id="copy-enquiry">Copy enquiry instead</button></div>
+        <p id="enquiry-status" role="status" aria-live="polite"></p>
         <p class="enquiry-note">Please don't include passwords, financial details or sensitive personal information. This form opens your email application; it does not send automatically.</p>
       </form>
     </section>
 
-    <section class="section" id="testimonials"><div class="section-heading"><p class="eyebrow">Client feedback</p><h2>Built on trust and genuine results.</h2></div><p>We're gathering verified client reviews. Have you worked with ObanimiStudio? <a href="mailto:obanimistudio@gmail.com?subject=ObanimiStudio%20Client%20Feedback">Share your experience ↗</a></p></section>
-
     <section class="section process-section" id="process">
       <div class="section-heading"><p class="eyebrow">How it works</p><h2>A clear journey from idea to launch.</h2></div>
       <ol class="process-grid">
-        <li><span>01</span><h3>Tell us your idea</h3><p>Share what you need, your preferred timescale and your budget range.</p></li>
-        <li><span>02</span><h3>Receive your quote</h3><p>We confirm the scope, price, delivery plan and what you need to provide.</p></li>
-        <li><span>03</span><h3>Design and review</h3><p>Work begins after the deposit, with two reasonable revision rounds included.</p></li>
-        <li><span>04</span><h3>Approve and launch</h3><p>After final approval and payment, your completed project is launched and handed over.</p></li>
+        <li><span>01</span><h3>Discuss</h3><p>Share what you need, your preferred timescale and your budget range.</p></li>
+        <li><span>02</span><h3>Plan and design</h3><p>We agree the scope, quote, delivery plan and content needed before design begins.</p></li>
+        <li><span>03</span><h3>Review</h3><p>Review the design and share your feedback. Two reasonable revision rounds are included, as set out in your quote.</p></li>
+        <li><span>04</span><h3>Launch and hand over</h3><p>After final approval and payment, we launch your project and explain access, ownership and any agreed ongoing support.</p></li>
       </ol>
+      <p class="process-note">For client websites, we agree account ownership at the start, with domain and hosting accounts set up in your name wherever possible.</p>
     </section>
 
     <section class="section pricing-section" id="pricing">
@@ -125,22 +127,46 @@
       <div class="section-heading"><p class="eyebrow">Selected work</p><h2>Useful digital spaces for real communities.</h2></div>
       <article class="project-card">
         <div class="project-visual" aria-hidden="true"><div class="browser-bar"><i></i><i></i><i></i></div><div class="project-screen"><span class="mini-brand">CCC · THE LIGHT OF JESUS PARISH</span><strong>Faith. Fellowship.<br>One digital home.</strong><div class="mini-nav"><span>Meeting</span><span>Hymns</span><span>Lessons</span></div></div></div>
-        <div class="project-copy"><p class="project-label">Case study 01 · Community platform · Live project</p><h3>The Light of Jesus Parish</h3><p>A dedicated church website bringing meetings, hymns, Bible lessons, events and community information into one welcoming digital space.</p><div class="case-facts"><p><strong>Challenge:</strong> Make parish activities and resources easier to find.</p><p><strong>Approach:</strong> Organise hymns, Bible lessons, meetings and events in one responsive website.</p><p><strong>Deliverable:</strong> A live parish website with direct access to community information.</p></div><a class="text-link" href="https://church.obanimistudio.com/" target="_blank" rel="noreferrer">Visit the live project <span>↗</span></a></div>
+        <div class="project-copy"><p class="project-label">Case study 01 · Community platform · Live project</p><h3>The Light of Jesus Parish</h3><p>A dedicated church website bringing meetings, hymns, Bible lessons, events and community information into one welcoming digital space.</p><div class="case-facts"><p><strong>Challenge:</strong> Make parish activities and resources easier to find.</p><p><strong>Approach:</strong> Organise hymns, Bible lessons, meetings and events in one responsive website.</p><p><strong>Delivered:</strong> A live, mobile-friendly parish website covering meetings, hymns, Bible lessons, events and a gallery.</p><p><strong>Designed for everyday use:</strong> Clear department links and Dark, Bright and Cool appearance options help members find and read parish information.</p></div><a class="text-link" href="https://church.obanimistudio.com/" target="_blank" rel="noreferrer">Visit the live project <span>↗</span></a></div>
       </article>
+    </section>
+
+    <section class="section showcase-section" id="showcase" aria-labelledby="showcase-title">
+      <div class="section-heading"><p class="eyebrow">Studio in 30 seconds</p><h2 id="showcase-title">See what we can create together.</h2></div>
+      <div class="showcase-layout">
+        <video controls playsinline preload="none" poster="assets/media/studio-showcase-poster.jpg" width="1080" height="1920" aria-label="30-second ObanimiStudio website and services showcase" aria-describedby="showcase-summary">
+          <source src="assets/media/obanimistudio-showcase.mp4" type="video/mp4">
+          Your browser does not support video. <a href="assets/media/obanimistudio-showcase.mp4">Download the studio showcase</a>.
+        </video>
+        <div class="showcase-copy"><p class="eyebrow">Websites · Digital products · Design</p><h3>Your idea deserves a digital home.</h3><p id="showcase-summary">This short showcase introduces our website design, digital products and visual design services, with previews from ObanimiStudio and our public parish project. Instrumental music accompanies the on-screen text; there is no speech.</p><p>Whether you are building a business, bringing a community together or developing a new idea, tell us what you have in mind.</p><a class="button primary" href="#enquiry">Discuss your project ↗</a></div>
+      </div>
+    </section>
+
+    <section class="section faq-section" id="faq" aria-labelledby="faq-title">
+      <div class="section-heading"><p class="eyebrow">Before we begin</p><h2 id="faq-title">A few useful answers.</h2></div>
+      <div class="faq-list">
+        <details><summary>How much will my website cost?</summary><p>Starter websites begin at £350, professional organisation sites at £750 and premium platforms at £1,200. The final quote depends on your pages, features, content and launch requirements. See the <a href="#pricing">packages and payment terms</a> above.</p></details>
+        <details><summary>How long does a project take?</summary><p>We agree a realistic delivery schedule after discussing your requirements. Timing depends on the project size, the availability of your content and how quickly feedback is provided. Include your preferred launch date in your enquiry so we can confirm what is achievable.</p></details>
+        <details><summary>Do I need a domain or hosting already?</summary><p>No. We can help you choose and set them up. Domain registration and any paid hosting or third-party services are discussed separately and agreed before purchase. Your quote will explain what is included and any recurring costs.</p></details>
+        <details><summary>Who owns the website and accounts?</summary><p>Ownership and handover are agreed in your project scope. For client websites, we aim to register the domain and hosting in your name so you retain control. Any third-party software, fonts or media remain subject to their own licences.</p></details>
+        <details><summary>What should I provide?</summary><p>Your business or organisation name, contact details, the pages or features you need, and any existing logo, text and photographs you have permission to use. If you need help preparing content, we can include that in the quote.</p></details>
+        <details><summary>Can I request changes or ongoing support?</summary><p>Website packages include two reasonable revision rounds within the agreed scope. Additional revisions, ongoing content updates and maintenance are quoted separately, so you can choose the level of support you need.</p></details>
+        <details><summary>How do payments work?</summary><p>The current schedule is 50% to begin, 25% after main design approval and 25% before final launch. We confirm the scope, payment schedule and any additional costs before work starts.</p></details>
+      </div>
     </section>
 
     <section class="section about" id="about">
       <div><p class="eyebrow">About ObanimiStudio</p><h2>Creativity is more powerful when it serves someone.</h2></div>
-      <div class="about-copy"><p>ObanimiStudio is an independent creative technology studio founded by Akinwale Bello, bringing together website design, digital products and visual creativity.</p><p>Good ideas deserve a clear, meaningful digital presence. We help people, businesses and communities turn those ideas into useful digital experiences.</p><div class="values"><span>Purpose</span><span>Creativity</span><span>Service</span><span>Growth</span></div></div>
+      <div class="about-copy"><p>ObanimiStudio is an independent creative technology studio founded by Akinwale Bello, bringing together website design, digital products and visual creativity.</p><p>Good ideas deserve a clear, meaningful digital presence. We help people, businesses and communities turn those ideas into useful digital experiences.</p><dl class="studio-values"><div><dt>Purpose</dt><dd>Every project starts with what you want to achieve and who it will help.</dd></div><div><dt>Creativity</dt><dd>Thoughtful ideas and distinctive design give your project its own identity.</dd></div><div><dt>Service</dt><dd>Clear communication and practical support guide you from the first conversation to handover.</dd></div><div><dt>Growth</dt><dd>A useful digital foundation gives your business or community room to develop.</dd></div></dl></div>
     </section>
 
-    <section class="contact-section"><p class="eyebrow">Request a quote</p><h2>Tell us what you would like to create.</h2><p>Share your idea, preferred timescale and budget range. We will reply with the clearest next step.</p><div class="contact-actions"><a class="contact-link" href="mailto:obanimistudio@gmail.com?subject=Request%20a%20Quote%20%E2%80%94%20ObanimiStudio">Request a Quote <span>↗</span></a><a class="contact-secondary" href="tel:+447449245130">Call +44 7449 245130</a><a class="contact-secondary" href="https://www.youtube.com/@ObanimiStudio" target="_blank" rel="noreferrer">Explore ObanimiStudio on YouTube</a></div></section>
+    <section class="contact-section"><p class="eyebrow">Request a quote</p><h2>Tell us what you would like to create.</h2><p>Share your idea, preferred timescale and budget range. We will reply with the clearest next step.</p><div class="contact-actions"><a class="contact-link" href="#enquiry">Request a Quote <span>↗</span></a><a class="contact-secondary" href="tel:+447449245130">Call +44 7449 245130</a><a class="contact-secondary" href="https://www.youtube.com/@ObanimiStudio" target="_blank" rel="noreferrer">Explore ObanimiStudio on YouTube</a></div></section>
   </main>
 
   <footer><a class="brand footer-brand" href="#top"><img src="assets/brand/obanimistudio-os-logo.jpg" alt="ObanimiStudio OS logo" class="brand-logo"><span class="brand-name">Obanimi<span>Studio</span></span></a><div class="footer-links"><a href="/products/">Our Products</a><a href="/music/">My Music</a><a href="/portal/">Client portal</a><a href="mailto:obanimistudio@gmail.com">Email</a><a href="tel:+447449245130">+44 7449 245130</a><a href="https://www.youtube.com/@ObanimiStudio" target="_blank" rel="noreferrer">YouTube</a></div><p>© <span id="year"></span> ObanimiStudio</p></footer>
   <script>const previousSections=['#yoruba-together','#encyclo','#yoruba-quiz'];if(previousSections.includes(location.hash))location.replace('/products/'+location.hash);else if(location.hash==='#latest-release')location.replace('/music/');</script>
   <script src="script.js"></script>
-  <script>document.getElementById('project-enquiry')?.addEventListener('submit',function(e){e.preventDefault();if(!this.reportValidity())return;const type=document.getElementById('enquiry-type').value,budget=document.getElementById('enquiry-budget').value,details=document.getElementById('enquiry-details').value;const subject='Project enquiry: '+type;const body='Project type: '+type+'\\nBudget: '+budget+'\\n\\nProject details:\\n'+details;window.location.href='mailto:obanimistudio@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);});</script>
+
   <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'));}</script>
 </body>
 </html>
