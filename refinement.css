@@ -105,3 +105,12 @@ html[data-theme="bright"]{--studio-metal:linear-gradient(118deg,#75500d 0%,#9867
   html .hero h1 span,html .brand-name span{background-image:var(--studio-metal);background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:0;text-shadow:none}
 }
 @media(forced-colors:active){html .hero h1 span,html .brand-name span{background:none;color:CanvasText;-webkit-text-fill-color:CanvasText}}
+
+/* Stronger reflected-light bands, contained within the hero accent itself. */
+:root{--studio-hero-metal:linear-gradient(180deg,#f6e3a3 0%,#ddb958 22%,#b88722 43%,#fff2ba 48%,#f3d57c 54%,#c7972c 69%,#e9ca76 86%,#b78620 100%)}
+html[data-theme="bright"]{--studio-hero-metal:linear-gradient(180deg,#9a6c14 0%,#bc8b23 27%,#80510b 44%,#edca70 49%,#c59634 55%,#946014 74%,#bc8b23 88%,#79500b 100%)}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+  html .hero h1 span{display:inline-block;padding-bottom:.08em;margin-bottom:-.08em;background-image:var(--studio-hero-metal);background-size:100% 100%;background-repeat:no-repeat;filter:drop-shadow(0 1px 0 rgba(86,52,4,.22))}
+  html[data-theme="bright"] .hero h1 span{-webkit-text-stroke:.45px #79500b}
+}
+@media(forced-colors:active){html .hero h1 span{background:none;filter:none;-webkit-text-stroke:0;color:CanvasText;-webkit-text-fill-color:CanvasText}}
