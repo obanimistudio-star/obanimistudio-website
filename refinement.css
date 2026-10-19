@@ -97,3 +97,11 @@ html[data-theme="cool"] .showcase-section,html[data-theme="cool"] .faq-section{b
 
 /* Values are descriptive content, not interactive controls. */
 .studio-values{margin:32px 0 0;display:grid;gap:22px}.studio-values>div{padding:0;border:0;background:none}.studio-values dt{font-weight:800;color:var(--gold2);font-size:17px}.studio-values dd{margin:5px 0 0;font-size:16px;line-height:1.65;color:var(--muted)}html[data-theme="bright"] .studio-values dd{color:#514b40}
+
+/* Restrained metallic gold for large type and the brand wordmark. */
+:root{--studio-metal:linear-gradient(118deg,#c39635 0%,#eed38d 24%,#fff0b5 40%,#cea744 55%,#e8cc80 76%,#bd8e2d 100%)}
+html[data-theme="bright"]{--studio-metal:linear-gradient(118deg,#75500d 0%,#986716 25%,#a97823 42%,#805510 58%,#9a6a1d 78%,#76500e 100%)}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+  html .hero h1 span,html .brand-name span{background-image:var(--studio-metal);background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:0;text-shadow:none}
+}
+@media(forced-colors:active){html .hero h1 span,html .brand-name span{background:none;color:CanvasText;-webkit-text-fill-color:CanvasText}}
