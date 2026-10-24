@@ -2,7 +2,7 @@
    Paid source files stay in the delivery service, never in this public repository. */
 (() => {
   'use strict';
-  const checkoutLinks = Object.freeze({weekly: '', event: '', content: '', bundle: ''});
+  const checkoutLinks = Object.freeze({weekly: 'https://payhip.com/b/cwAZL', event: 'https://payhip.com/b/FioAb', content: 'https://payhip.com/b/GN4Mp', bundle: 'https://payhip.com/b/EY3KP'});
   let active = 0;
   document.querySelectorAll('.checkout[data-product]').forEach(button => {
     const candidate = checkoutLinks[button.dataset.product];
