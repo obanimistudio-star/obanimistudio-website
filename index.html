@@ -29,6 +29,14 @@
   <script>try{const t=localStorage.getItem('obanimistudio-theme');if(['dark','bright','cool'].includes(t))document.documentElement.dataset.theme=t;}catch(e){}</script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="refinement.css?v=20261019-metal2">
+<style id="studio-christmas-style">
+.studio-christmas{position:relative;isolation:isolate;overflow:hidden;max-width:1240px;margin:24px auto 64px;padding:64px 6%;border:1px solid #cba65d66;border-radius:28px;background:radial-gradient(ellipse at 85% 10%,#214f4d 0,transparent 58%),linear-gradient(125deg,#081725,#102d35);color:#fff5df;display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.studio-christmas .eyebrow{color:#edcd8b;letter-spacing:.18em}.studio-christmas h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(2.3rem,4.6vw,4rem);line-height:1.1;margin:14px 0 20px;color:#fff5df}.studio-christmas h2 em{color:#edcd8b}.studio-christmas p{max-width:460px;line-height:1.8;color:#e0e9e6}.studio-christmas .button{margin-top:18px;background:#e7c57f;color:#10252c;border:1px solid #f6dea9}.festive-art{width:100%;max-width:440px;justify-self:center;filter:drop-shadow(0 12px 28px #0005)}.festive-art .twinkle{transform-box:fill-box;transform-origin:center;animation:christmas-glow 5s ease-in-out 2}.festive-art .twinkle.delay{animation-delay:2s}.studio-christmas small{display:block;margin-top:16px;color:#c2d2d1}.festive-snow{position:absolute;inset:0;pointer-events:none;z-index:-1;background-image:radial-gradient(circle,#fff9 1px,transparent 1.8px),radial-gradient(circle,#f6db9a77 1px,transparent 2px);background-size:91px 107px,157px 139px;background-position:13px 7px,51px 35px;opacity:.28;animation:christmas-snow 16s linear 1}.festive-hide{position:absolute;right:18px;top:14px;border:1px solid #d5bd8266;border-radius:20px;padding:6px 12px;background:#0a232b;color:#eee2bf;font:inherit;font-size:12px;cursor:pointer}.studio-christmas[hidden]{display:none}
+@keyframes christmas-glow{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes christmas-snow{from{background-position:13px -100px,51px -100px}to{background-position:13px 7px,51px 35px}}
+@media(max-width:700px){.studio-christmas{margin:16px 16px 40px;padding:56px 26px 30px;grid-template-columns:1fr;gap:10px}.festive-art{max-width:310px;order:-1}.studio-christmas h2{font-size:2.5rem}}
+@media(prefers-reduced-motion:reduce){.studio-christmas *, .festive-snow{animation:none!important}}
+</style>
 </head>
 <body id="top">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -67,6 +75,28 @@
       </div>
     </section>
 
+    <section class="studio-christmas" id="christmas" aria-labelledby="christmas-title">
+<div class="festive-snow" aria-hidden="true"></div>
+<button type="button" class="festive-hide" aria-label="Hide Christmas feature" onclick="this.closest('section').hidden=true">Hide ×</button>
+<div><p class="eyebrow">OBANIMISTUDIO · CHRISTMAS COLLECTION 2026</p><h2>A little wonder.<br><em>A lot of Christmas joy.</em></h2><p>Make someone smile with a beautifully personalised Christmas card. Add your words, choose your style and send a little love.</p><a class="button primary" href="/christmas/">Create your free Christmas card ↗</a><small>A festive gift from ObanimiStudio · Free to personalise and download</small></div>
+<svg class="festive-art" viewBox="0 0 440 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<defs><linearGradient id="xmas-gold" x2="1" y2="1"><stop stop-color="#fff0c0"/><stop offset=".5" stop-color="#d8ac59"/><stop offset="1" stop-color="#a47b35"/></linearGradient><linearGradient id="xmas-red" x2="1" y2="1"><stop stop-color="#bc4550"/><stop offset="1" stop-color="#702738"/></linearGradient></defs>
+<circle cx="267" cy="126" r="91" fill="#fff2cc" opacity=".05"/><circle cx="267" cy="126" r="68" stroke="#d9bc76" opacity=".2"/>
+<g class="twinkle" stroke="#e8c780" stroke-linecap="round"><path d="M65 40v-14m0 62V74M41 57H27m76 0H89M48 40l-9-9m43 43 9 9M48 74l-9 9m43-43 9-9"/><circle cx="65" cy="57" r="4" fill="#ffe5a0"/></g>
+<g class="twinkle delay" stroke="#e8c780" opacity=".7"><path d="M367 190v-15m0 55v-15m-13-13h-15m55 0h-15m-21-9-9-9m27 27 9 9m-27-9-9 9m27-27 9-9"/></g>
+<path d="M45 261Q190 234 391 277" stroke="#d3b36e" stroke-dasharray="2 10" opacity=".5"/>
+<g stroke="url(#xmas-gold)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="m199 159 31-14 23 7 17-23 16 1-7 13-20 23-30-2-20 17m30-17-5 25-14 7m35-32 17 18 15 1m-12-53-3-14m3 9 12-9m-11 4-8-10"/>
+<path d="m304 128 27-13 22 7 17-23 15 2-7 12-21 23-26-3-19 17m28-16-4 24-14 7m33-30 18 18 14 1m-10-53-4-14m4 8 11-8m-11 4-8-10"/>
+<path d="M172 183q78-68 161-62" stroke-width="1" opacity=".8"/>
+</g>
+<path d="M86 173h65l10 30h-66z" fill="url(#xmas-red)" stroke="#e5c481" stroke-width="2"/><path d="m90 207 5 13h76q14 0 17-13M102 204v15m50-15v15" stroke="url(#xmas-gold)" stroke-width="3" stroke-linecap="round"/>
+<path d="M111 173q-4-23 14-25 20 1 22 25" fill="#aa3744"/><circle cx="129" cy="143" r="11" fill="#f1cfaa"/><path d="m116 138 6-21 20 21" fill="#b9424d"/><path d="M118 138h23" stroke="#fff4e1" stroke-width="5" stroke-linecap="round"/><circle cx="122" cy="117" r="4" fill="#fff4e1"/><path d="M119 148q9 19 20-1" fill="#fff4e1"/>
+<path d="M65 294q155-20 303 5" stroke="#e3cc94" opacity=".4"/>
+<path d="M299 247v46q0 13-13 16l-22 6q-13 3-15-8-2-9 10-13l15-6v-41" fill="url(#xmas-red)" stroke="#e1bc77" stroke-width="2"/><path d="M272 247h30" stroke="#fff0d1" stroke-width="10"/>
+<path d="M340 253v35q0 11 11 14l17 5q11 3 13-7 1-8-9-11l-12-5v-31" fill="#2f675a" stroke="#e1bc77" stroke-width="2"/><path d="M338 253h24" stroke="#fff0d1" stroke-width="9"/>
+<path d="M274 227q42 20 87 6" stroke="#ddbd7b" stroke-width="1.5"/><path d="m170 64 3 10 10 3-10 3-3 10-3-10-10-3 10-3zM318 49l2 7 7 2-7 2-2 7-2-7-7-2 7-2z" fill="#eacb85"/>
+</svg></section>
     <section class="statement">
       <p>One studio. Many expressions.</p>
       <h2>Where creativity, technology and service meet.</h2>
