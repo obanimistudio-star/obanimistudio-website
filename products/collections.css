@@ -85,3 +85,28 @@ html[data-theme="bright"] .collection-outro{background:linear-gradient(135deg,rg
   .collection-card{min-width:0;padding:clamp(24px,2.4vw,34px)}
   .collection-card h2{font-size:clamp(28px,3vw,38px)}
 }
+
+
+/* Root-level tablet guard: prevent retained sideways scrolling on landscape devices. */
+html:has(.collection-page),body:has(.collection-page){
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  overscroll-behavior-x:none
+}
+@media(min-width:701px) and (max-width:1366px){
+  .collection-page{width:100%;max-width:100%;overflow-x:hidden}
+  .collection-intro,.collection-grid,.collection-outro,.sound-signature{
+    position:relative;
+    left:auto;
+    right:auto;
+    transform:none;
+    box-sizing:border-box;
+    max-width:calc(100vw - 64px)
+  }
+  .collection-intro h1{
+    max-width:100%;
+    font-size:clamp(64px,8vw,100px);
+    letter-spacing:-.06em
+  }
+}
