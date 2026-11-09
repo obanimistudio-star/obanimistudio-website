@@ -145,7 +145,8 @@ img{height:auto}
   .hero-actions{display:grid;grid-template-columns:1fr}
   .hero-actions .button{width:100%}
   .hero-brand{width:264px;max-width:264px;margin:8px auto 4px;isolation:isolate}
-  .hero-picture .hero-logo{width:58%}
+  .hero-brand .hero-picture{position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center}
+  .hero-picture .hero-logo{width:58%;margin:0;display:block}
   .hero-brand .ring-one{display:block;inset:1%;border-style:solid}
   .hero-brand .ring-two{display:block;inset:11%;border-style:dashed}
   .hero-brand .ring-one:after,.hero-brand .ring-one:before,.hero-brand .ring-two:after{width:7px;height:7px;background:var(--gold2);border-radius:50%;box-shadow:0 0 13px var(--gold2)}
