@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">ObanimiStudio OS logo</title>
+  <desc id="desc">Gold crescent and white S inside a polished gold circle with the ObanimiStudio wordmark.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9a6205"/>
+      <stop offset=".17" stop-color="#ffd96b"/>
+      <stop offset=".38" stop-color="#fff0a8"/>
+      <stop offset=".57" stop-color="#d59617"/>
+      <stop offset=".79" stop-color="#ffe47e"/>
+      <stop offset="1" stop-color="#865000"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe98f"/>
+      <stop offset=".45" stop-color="#e9ad2c"/>
+      <stop offset="1" stop-color="#a66300"/>
+    </linearGradient>
+    <radialGradient id="black" cx="50%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#151515"/>
+      <stop offset=".68" stop-color="#030303"/>
+      <stop offset="1"/>
+    </radialGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="600" cy="600" r="574" fill="url(#black)"/>
+  <circle cx="600" cy="600" r="554" fill="none" stroke="url(#gold)" stroke-width="25"/>
+  <circle cx="600" cy="600" r="529" fill="none" stroke="#f6cb57" stroke-opacity=".38" stroke-width="3"/>
+  <path d="M610 177C401 203 267 371 271 566c4 194 143 355 342 371-146-58-226-200-208-348 18-150 103-293 205-412Z" fill="url(#gold)"/>
+  <text x="615" y="800" text-anchor="middle" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="660" font-weight="400" filter="url(#glow)">S</text>
+  <text x="600" y="1000" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="400" letter-spacing="-5">
+    <tspan fill="#fff">Obanimi</tspan><tspan fill="url(#goldText)">Studio</tspan>
+  </text>
+</svg>
