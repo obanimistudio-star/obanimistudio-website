@@ -1,7 +1,7 @@
-const CACHE_NAME = 'obanimistudio-os-v26-restored-mobile-orbit';
+const CACHE_NAME = 'obanimistudio-os-v27-drawn-mobile-orbit';
 const APP_FILES = [
   './', './index.html', './styles.css', './refinement.css?v=20261019-metal2',
-  './premium-4k.css?v=20261109-orbit3', './script.js', './manifest.webmanifest',
+  './premium-4k.css?v=20261109-orbit4', './script.js', './manifest.webmanifest',
   './assets/brand/obanimistudio-os-logo.svg',
   './assets/brand/responsive/obanimistudio-os-logo-320.avif',
   './assets/brand/responsive/obanimistudio-os-logo-320.webp',
