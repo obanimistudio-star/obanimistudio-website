@@ -40,8 +40,8 @@ body::before{
 }
 .brand-logo{image-rendering:auto;box-shadow:0 0 0 1px #f3d98555,0 10px 36px #0008,0 0 32px #d5a82d2e}
 .brand-picture{display:grid;place-items:center;flex:0 0 auto;line-height:0}
-.hero-picture{display:grid;place-items:center;width:100%;height:100%;position:relative;z-index:2}
-.hero-picture .hero-logo{width:60%;height:auto}
+.hero-picture{display:grid;place-items:center;position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.hero-picture .hero-logo{position:absolute;left:50%;top:50%;width:60%;height:auto;margin:0;display:block;transform:translate(-50%,-50%)}
 .brand-name{font-size:clamp(1.18rem,1.35vw,1.42rem);letter-spacing:-.045em}
 .nav{font-weight:650;letter-spacing:.01em}
 .nav a{position:relative}
