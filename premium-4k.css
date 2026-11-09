@@ -145,10 +145,13 @@ img{height:auto}
   .hero-actions{display:grid;grid-template-columns:1fr}
   .hero-actions .button{width:100%}
   .hero-brand{width:264px;max-width:264px;margin:8px auto 4px;isolation:isolate}
-  .hero-picture .hero-logo{width:68%}
-  .hero-brand .ring-one{display:block;inset:3%}
-  .hero-brand .ring-two{display:block;inset:14%}
-  .hero-brand .ring-one:after,.hero-brand .ring-two:after{width:7px;height:7px;box-shadow:0 0 13px var(--gold2)}
+  .hero-picture .hero-logo{width:58%}
+  .hero-brand .ring-one{display:block;inset:1%;border-style:solid}
+  .hero-brand .ring-two{display:block;inset:11%;border-style:dashed}
+  .hero-brand .ring-one:after,.hero-brand .ring-one:before,.hero-brand .ring-two:after{width:7px;height:7px;background:var(--gold2);border-radius:50%;box-shadow:0 0 13px var(--gold2)}
+  .hero-brand .ring-one:after{top:-4px;left:52%}
+  .hero-brand .ring-one:before{content:"";position:absolute;top:31%;right:-4px}
+  .hero-brand .ring-two:after{top:17%;left:2%}
   #services,.digital-help-section,.pricing-section{max-width:calc(100% - 24px)}
   .project-card{padding:26px 20px}
   .contact-section{max-width:calc(100% - 24px);margin-inline:12px}
