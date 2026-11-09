@@ -67,3 +67,21 @@ html[data-theme="bright"] .collection-outro{background:linear-gradient(135deg,rg
   .collection-card{min-height:410px}
   .collection-card:after{right:34px;top:78px}
 }
+
+
+/* Tablet landscape containment: keep the full grid inside the visible page. */
+.collection-page{overflow-x:clip}
+.collection-intro,.collection-grid,.collection-outro,.sound-signature{box-sizing:border-box;width:100%}
+@media(min-width:1101px) and (max-width:1366px){
+  .collection-intro,.collection-grid,.collection-outro,.sound-signature{
+    width:calc(100% - 64px);
+    max-width:1180px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:0;
+    padding-right:0
+  }
+  .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+  .collection-card{min-width:0;padding:clamp(24px,2.4vw,34px)}
+  .collection-card h2{font-size:clamp(28px,3vw,38px)}
+}
