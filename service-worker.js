@@ -1,7 +1,7 @@
-const CACHE_NAME = 'obanimistudio-os-v31-restored-tablet-orbit';
+const CACHE_NAME = 'obanimistudio-os-v32-three-orbit-dots';
 const APP_FILES = [
   './', './index.html', './styles.css', './refinement.css?v=20261019-metal2',
-  './premium-4k.css?v=20261109-tablet2', './script.js', './manifest.webmanifest',
+  './premium-4k.css?v=20261109-dots3', './script.js', './manifest.webmanifest',
   './assets/brand/obanimistudio-os-logo.svg',
   './assets/brand/responsive/obanimistudio-os-logo-320.avif',
   './assets/brand/responsive/obanimistudio-os-logo-320.webp',
