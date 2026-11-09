@@ -1,1 +1,46 @@
-const CACHE_NAME='obanimistudio-os-v21-metallic-headline';const APP_FILES=['./','./index.html','./styles.css','./refinement.css?v=20261019-metal2','./script.js','./yoruba-quiz/icons/icon-512.png','./manifest.webmanifest','./assets/brand/obanimistudio-os-logo.jpg','./assets/icons/app-icon-64.png','./assets/icons/app-icon-192.png','./assets/icons/app-icon-512.png'];self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(APP_FILES)));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))));self.clients.claim();});self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.pathname.startsWith('/portal/')||u.hostname.endsWith('.supabase.co'))return;if(e.request.method!=='GET')return;if(e.request.mode==='navigate'){e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE_NAME).then(c=>c.put(e.request,copy));return r;}).catch(()=>caches.match('./index.html')));return;}if(e.request.destination==='style'||e.request.destination==='script'){e.respondWith(fetch(e.request).then(response=>{const copy=response.clone();caches.open(CACHE_NAME).then(c=>c.put(e.request,copy));return response;}).catch(()=>caches.match(e.request)));return;}e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request)));});
+const CACHE_NAME = 'obanimistudio-os-v22-premium-4k-media';
+const APP_FILES = [
+  './', './index.html', './styles.css', './refinement.css?v=20261019-metal2',
+  './premium-4k.css?v=20261109', './script.js', './manifest.webmanifest',
+  './assets/brand/obanimistudio-os-logo.svg',
+  './assets/brand/responsive/obanimistudio-os-logo-320.avif',
+  './assets/brand/responsive/obanimistudio-os-logo-320.webp',
+  './assets/media/responsive/studio-showcase-poster-1080.webp',
+  './assets/icons/app-icon-64.png', './assets/icons/app-icon-192.png',
+  './assets/icons/app-icon-512.png'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)));
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(caches.keys().then(keys => Promise.all(
+    keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+  )));
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  if (url.pathname.startsWith('/portal/') || url.hostname.endsWith('.supabase.co')) return;
+  if (event.request.method !== 'GET') return;
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).then(response => {
+      const copy = response.clone();
+      caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+      return response;
+    }).catch(() => caches.match('./index.html')));
+    return;
+  }
+  if (event.request.destination === 'style' || event.request.destination === 'script') {
+    event.respondWith(fetch(event.request).then(response => {
+      const copy = response.clone();
+      caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+      return response;
+    }).catch(() => caches.match(event.request)));
+    return;
+  }
+  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request)));
+});
