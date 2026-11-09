@@ -7,3 +7,33 @@
 .collection-page :is(#yoruba-together,#encyclo).collection-card .collection-status{color:var(--gold2);font-size:12px}
 .collection-page :is(#yoruba-together,#encyclo).collection-card .eyebrow{color:var(--gold2)}
 @media(max-width:700px){.collection-page :is(#yoruba-together,#encyclo).collection-card{padding:26px}.collection-page :is(#yoruba-together,#encyclo).collection-card h2{font-size:28px}}
+
+
+/* Premium 4K collection experience */
+.collection-page{background-image:radial-gradient(55rem 38rem at 86% 8%,rgba(227,184,79,.12),transparent 66%),radial-gradient(44rem 34rem at 5% 48%,rgba(20,100,100,.08),transparent 70%)}
+.collection-intro{position:relative;isolation:isolate;min-height:430px;display:flex;flex-direction:column;justify-content:center}
+.collection-intro:after{content:"OS";position:absolute;right:2%;top:10%;z-index:-1;font:900 clamp(150px,25vw,340px)/1 Manrope,sans-serif;letter-spacing:-.12em;color:transparent;-webkit-text-stroke:1px rgba(240,201,93,.13);opacity:.8}
+.collection-intro h1{font-size:clamp(64px,9vw,118px);letter-spacing:-.07em;text-shadow:0 22px 70px rgba(0,0,0,.20)}
+.collection-lead{font-size:clamp(18px,1.55vw,23px)}
+.collection-grid{gap:clamp(18px,2vw,30px)}
+.collection-card{position:relative;isolation:isolate;min-height:440px;padding:clamp(26px,3vw,42px);border-radius:clamp(22px,2.2vw,34px);border:1px solid rgba(240,201,93,.20);background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.018));box-shadow:inset 0 1px rgba(255,255,255,.06),0 30px 80px rgba(0,0,0,.15);transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s}
+.collection-card:before{content:"";position:absolute;right:-18%;bottom:-26%;width:64%;aspect-ratio:1;border-radius:50%;z-index:-1;background:radial-gradient(circle,rgba(227,184,79,.16),transparent 67%);transition:transform .4s}
+.collection-card:after{position:absolute;right:30px;top:76px;width:76px;height:76px;display:grid;place-items:center;border-radius:22px;border:1px solid rgba(240,201,93,.28);background:linear-gradient(145deg,rgba(240,201,93,.16),rgba(255,255,255,.025));color:var(--gold2);font:850 25px Manrope,sans-serif;box-shadow:inset 0 1px rgba(255,255,255,.08),0 18px 42px rgba(0,0,0,.14)}
+.collection-card:nth-child(1):after{content:"YỌ"}.collection-card:nth-child(2):after{content:"ṢM"}.collection-card:nth-child(3):after{content:"OE"}.collection-card:nth-child(4):after{content:"OG"}.collection-card:nth-child(5):after{content:"OS"}.collection-card:nth-child(6):after{content:"DS"}
+.collection-card:hover{transform:translateY(-9px);border-color:rgba(240,201,93,.47);box-shadow:inset 0 1px rgba(255,255,255,.08),0 42px 100px rgba(0,0,0,.22)}
+.collection-card:hover:before{transform:translate(-8%,-8%) scale(1.08)}
+.collection-card h2{max-width:70%;font-size:clamp(30px,3vw,44px);letter-spacing:-.045em}
+.collection-status{display:inline-flex;width:max-content;max-width:100%;padding:7px 11px;border:1px solid rgba(240,201,93,.20);border-radius:999px;background:rgba(240,201,93,.07);font-size:12px;letter-spacing:.02em}
+.collection-link{display:inline-flex;width:max-content;max-width:100%;margin-top:auto;padding-top:22px;font-weight:850;color:var(--gold2);border-bottom:1px solid transparent;transition:border-color .25s}
+.collection-link:hover{border-color:currentColor}
+.collection-outro{margin-bottom:90px;padding-top:clamp(48px,6vw,82px);padding-bottom:clamp(48px,6vw,82px);border:1px solid rgba(240,201,93,.22);border-radius:32px;background:linear-gradient(135deg,rgba(227,184,79,.10),rgba(255,255,255,.02));box-shadow:0 30px 90px rgba(0,0,0,.15)}
+.release-section{border:1px solid rgba(240,201,93,.19);border-radius:32px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(227,184,79,.035));box-shadow:0 38px 100px rgba(0,0,0,.19)}
+.release-media{position:relative;border:1px solid rgba(240,201,93,.30);box-shadow:0 34px 90px rgba(0,0,0,.36)}
+.release-media:before{content:"";position:absolute;inset:-18px;border:1px solid rgba(240,201,93,.12);border-radius:24px;pointer-events:none}
+.sound-signature{max-width:1180px;margin:0 auto 30px;padding:0 28px;display:flex;align-items:center;gap:18px;color:var(--gold2)}
+.sound-signature span{width:68px;height:68px;display:grid;place-items:center;border:1px solid rgba(240,201,93,.40);border-radius:50%;font:900 24px Georgia,serif;box-shadow:0 0 45px rgba(227,184,79,.12)}
+.sound-signature p{font-size:11px;letter-spacing:.18em;font-weight:800}
+.brand-picture{display:grid;place-items:center;line-height:0;flex:0 0 auto}
+@media(min-width:1600px){.collection-intro,.collection-grid,.collection-outro,.sound-signature{max-width:1440px}.collection-card{min-height:500px}}
+@media(max-width:760px){.collection-intro{min-height:360px}.collection-card{min-height:390px}.collection-card:after{width:60px;height:60px;right:22px;top:70px;font-size:19px}.collection-card h2{max-width:72%}.collection-outro{margin-left:18px;margin-right:18px}.sound-signature{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){.collection-card{transition:none}.collection-card:hover{transform:none}}
