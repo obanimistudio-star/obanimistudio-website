@@ -69,6 +69,7 @@ body::before{
 .hero-brand{width:100%;max-width:min(520px,42vw)}
 .hero-logo{width:60%;box-shadow:0 40px 120px rgba(0,0,0,.62),0 0 90px rgba(227,184,79,.22)}
 .gold-ring{box-shadow:inset 0 0 24px rgba(239,210,122,.025),0 0 34px rgba(239,210,122,.035)}
+.hero-brand .ring-one:before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:var(--gold2);box-shadow:0 0 20px var(--gold2);top:31%;right:-5px}
 .button{
   min-height:50px;padding:14px 24px;border-radius:999px;letter-spacing:.01em;
   transition:transform .25s ease,box-shadow .25s ease,filter .25s ease,border-color .25s ease;
