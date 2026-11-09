@@ -1,7 +1,7 @@
-const CACHE_NAME = 'obanimistudio-os-v29-optically-centred-logo';
+const CACHE_NAME = 'obanimistudio-os-v30-centred-all-screens';
 const APP_FILES = [
   './', './index.html', './styles.css', './refinement.css?v=20261019-metal2',
-  './premium-4k.css?v=20261109-orbit6', './script.js', './manifest.webmanifest',
+  './premium-4k.css?v=20261109-tablet1', './script.js', './manifest.webmanifest',
   './assets/brand/obanimistudio-os-logo.svg',
   './assets/brand/responsive/obanimistudio-os-logo-320.avif',
   './assets/brand/responsive/obanimistudio-os-logo-320.webp',
