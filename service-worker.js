@@ -1,7 +1,7 @@
-const CACHE_NAME = 'obanimistudio-os-v35-search-discovery';
+const CACHE_NAME = 'obanimistudio-os-v36-responsive-5k';
 const APP_FILES = [
   './', './index.html', './styles.css', './refinement.css?v=20261113-trust',
-  './premium-4k.css?v=20261109-master2', './services/', './privacy.html', './terms.html', './script.js', './manifest.webmanifest',
+  './premium-4k.css?v=20261109-master2', './premium-5k.css?v=20261122-responsive', './services/', './privacy.html', './terms.html', './script.js', './manifest.webmanifest',
   './assets/brand/obanimistudio-os-logo.svg',
   './assets/brand/responsive/obanimistudio-os-logo-320.avif',
   './assets/brand/responsive/obanimistudio-os-logo-320.webp',
