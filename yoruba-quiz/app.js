@@ -19,7 +19,7 @@ const categoryCards=[
 const $=id=>document.getElementById(id);
 const screens=[$("homeScreen"),$("quizScreen"),$("resultScreen")];
 const ladder=[100,200,300,500,1000,2000,4000,8000,16000,32000];
-let game,timer,deferredInstall,selectedDifficulty="All",language="YO";
+let game,timer,deferredInstall,selectedDifficulty="All";
 let soundOn=localStorage.getItem("yorubaSound")!=="off",musicOn=localStorage.getItem("yorubaMusic")!=="off",audioContext,musicTimer;
 const certificateMark=new Image();certificateMark.src="icons/icon-512.png";
 function getStats(){try{return JSON.parse(localStorage.getItem("yorubaStats"))||{}}catch(_){return{}}}
@@ -47,9 +47,14 @@ $("quickPlayButton").addEventListener("click",()=>start(null,10,"Gbogbo Ẹ̀k�
 document.querySelectorAll(".difficulty").forEach(button=>button.addEventListener("click",()=>{selectedDifficulty=button.dataset.difficulty;document.querySelectorAll(".difficulty").forEach(b=>b.classList.toggle("active",b===button))}));
 $("soundButton").addEventListener("click",()=>{soundOn=!soundOn;musicOn=soundOn;localStorage.setItem("yorubaSound",soundOn?"on":"off");localStorage.setItem("yorubaMusic",musicOn?"on":"off");$("soundButton").textContent=soundOn?"♪":"×";soundOn?startMusic():stopMusic()});
 $("themeButton").addEventListener("click",()=>{const themes=["dark","cool","light"],current=document.body.dataset.theme||"dark";document.body.dataset.theme=themes[(themes.indexOf(current)+1)%themes.length]});
-$("languageButton").addEventListener("click",()=>{language=language==="YO"?"EN":"YO";$("languageButton").textContent=language==="YO"?"EN":"YO";$("quickPlayButton").firstChild.textContent=language==="YO"?"BẸ̀RẸ̀ ÌDÁNWÒ ":"START QUIZ ";$("categoriesButton").textContent=language==="YO"?"YAN Ẹ̀KA Ẹ̀KỌ́":"CHOOSE CATEGORY"});
+$("languageButton").addEventListener("click", () => {
+  const guide = $("englishGuide");
+  guide.hidden = !guide.hidden;
+  $("languageButton").setAttribute("aria-expanded", String(!guide.hidden));
+  if (!guide.hidden) guide.scrollIntoView({ block: "nearest" });
+});
 $("fiftyButton").addEventListener("click",()=>{if(game.used.fifty||game.answered)return;game.used.fifty=true;$("fiftyButton").disabled=true;shuffle([0,1,2,3].filter(i=>i!==game.correctIndex)).slice(0,2).forEach(i=>document.querySelector(`.answer-button[data-index="${i}"]`).classList.add("removed"))});
 $("audienceButton").addEventListener("click",()=>{if(game.used.audience||game.answered)return;game.used.audience=true;$("audienceButton").disabled=true;const winning=58+Math.floor(Math.random()*23),remaining=100-winning,cuts=[Math.floor(remaining*.5),Math.floor(remaining*.3)];const values=[0,0,0,0];values[game.correctIndex]=winning;let others=[0,1,2,3].filter(i=>i!==game.correctIndex);values[others[0]]=cuts[0];values[others[1]]=cuts[1];values[others[2]]=remaining-cuts[0]-cuts[1];$("audiencePoll").innerHTML=values.map((value,index)=>`<div><span style="height:${value}%"></span><b>${String.fromCharCode(65+index)}</b><small>${value}%</small></div>`).join("");$("audiencePoll").hidden=false});
 $("timeButton").addEventListener("click",()=>{if(game.used.time||game.answered)return;game.used.time=true;game.seconds+=10;tick();$("timeButton").disabled=true});$("skipButton").addEventListener("click",()=>{if(game.used.skip||game.answered)return;game.used.skip=true;$("skipButton").disabled=true;game.answered=true;if(game.index<game.questions.length-1){game.index++;renderQuestion()}else finish()});$("certificateButton").addEventListener("click",downloadCertificate);
-addEventListener("beforeinstallprompt",event=>{event.preventDefault();deferredInstall=event;$("installButton").hidden=false});$("installButton").addEventListener("click",async()=>{if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;$("installButton").hidden=true});addEventListener("appinstalled",()=>$("installButton").hidden=true);function status(){$("onlineStatus").textContent=navigator.onLine?"● Online":"● Offline mode"}addEventListener("online",status);addEventListener("offline",status);if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));$("bankSummary").textContent=`12 Ẹ̀KA Ẹ̀KỌ́ · 4 ÌRÀNLỌ́WỌ́ · 2 ÈDÈ · ${questions.length.toLocaleString()} ÌBÉÈRÈ`;renderCategories();updateStats();status();
+addEventListener("beforeinstallprompt",event=>{event.preventDefault();deferredInstall=event;$("installButton").hidden=false});$("installButton").addEventListener("click",async()=>{if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;$("installButton").hidden=true});addEventListener("appinstalled",()=>$("installButton").hidden=true);function status(){$("onlineStatus").textContent=navigator.onLine?"● Online":"● Offline mode"}addEventListener("online",status);addEventListener("offline",status);if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));$("bankSummary").textContent=`12 Ẹ̀KA Ẹ̀KỌ́ · 4 ÌRÀNLỌ́WỌ́ · ${questions.length.toLocaleString()} ÌBÉÈRÈ`;renderCategories();updateStats();status();
 })();
