@@ -1,0 +1,14 @@
+/* ObanimiStudio 5K Web Standard
+   High-resolution source artwork with responsive, lightweight delivery. */
+.artwork-project{background:linear-gradient(135deg,#15100d,#2a190f);color:#f7ead2}
+.artwork-project .project-copy>p:not(.project-label){color:#d8c9b5}
+.artwork-project .case-facts{background:rgba(211,164,76,.09)}
+.artwork-visual{display:grid;place-items:center;min-height:0;padding:clamp(18px,3vw,34px);background:radial-gradient(circle at 50% 20%,rgba(232,164,62,.18),transparent 42%),linear-gradient(145deg,#070a0d,#17110d)}
+.artwork-picture{display:block;width:min(100%,560px)}
+.artwork-picture img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border:1px solid rgba(240,203,132,.28);border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.38)}
+.delivery-badges{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+.delivery-badges span{padding:7px 10px;border:1px solid rgba(207,166,87,.35);border-radius:999px;font-size:12px;letter-spacing:.04em;color:#e7c981;background:rgba(255,255,255,.035)}
+html[data-theme="bright"] .artwork-project{background:linear-gradient(135deg,#f7efe1,#e8d5b6);color:#251d13}
+html[data-theme="bright"] .artwork-project .project-copy>p:not(.project-label){color:#554636}
+html[data-theme="cool"] .artwork-project{background:linear-gradient(135deg,#082c39,#173d48)}
+@media(max-width:700px){.artwork-visual{padding:16px}.artwork-picture img{border-radius:14px}}
